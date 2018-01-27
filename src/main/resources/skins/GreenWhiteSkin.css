@@ -1,0 +1,30 @@
+.root{
+    -fx-background-color: gainsboro;
+}
+.label{
+    -fx-text-fill: #e8e8e8;
+    -fx-text-color: black;
+}
+.button{
+    -fx-background-color: green;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 5;
+    -fx-pref-width: 150px;
+}
+
+#bold-label{
+    -fx-font-weight: bold;
+    -fx-text-color: black;
+}
+
+.menu-bar{
+    -fx-background-color: green;
+}
+
+.menu-item{
+    -fx-background-color: green;
+}
+
+.table-view{
+    -fx-background-color: green;
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<projekt>
+    <database database="hotel">
+        <user>admin</user>
+        <pass>admin</pass>
+    </database>
+</projekt>
