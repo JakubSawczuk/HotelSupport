@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import timewithrest.DataByRESTful;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -35,16 +36,23 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     static public Scene scene;
 
     private Label namelabel,
-            passlabel;
+            passlabel,
+            stringdatalabel,
+            datalabel;
+
     private TextField namefield,
             passfield;
 
-    private Button loginButton;
+    private Button loginButton,
+            exitButton;
     public static Properties properties;
+
+
 
 
     SupportDatabase supportDatabase = new SupportDatabase();
     BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
+    DataByRESTful dataByRESTful = InstancesSet.getInstanceDataByRESTful();
 
     public static void main(String[] args) {
         launch(args);
@@ -53,6 +61,8 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        (new Thread(dataByRESTful)).start();
+        sleep(2700);
         window = primaryStage;
         readProperties("src\\main\\resources\\pol.properties");
         setup();
@@ -105,8 +115,14 @@ public class LogInWindow extends Application implements IStandardGUIclass {
             basicWindow.runThreadsWindow();
             layout.getChildren().remove(grid);
             layout.setCenter(BasicWindow.gridPane);
-            window.setWidth(200);
-            window.setHeight(350);
+            window.setWidth(260);
+            window.setHeight(300);
+        });
+    }
+
+    public void actionExitButton(){
+        exitButton.setOnAction(event -> {
+            exit(0);
         });
     }
 
@@ -125,13 +141,19 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         makeAllFields();
         makeAllButtons();
         actionLoginButton();
+        actionExitButton();
 
         grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.getChildren().addAll(namelabel, namefield, passlabel, passfield, loginButton);
+        grid.setVgap(10);
+        grid.setHgap(3);
+        grid.setPadding(new Insets(0,10,10,10));
+        grid.getChildren().addAll(namelabel, namefield, passlabel, passfield,
+                loginButton, exitButton, stringdatalabel, datalabel);
 
-        layout.setBottom(grid);
-        scene = new Scene(layout, 275, 150);
+
+        layout.setCenter(grid);
+
+        scene = new Scene(layout, 260, 220);
         scene.getStylesheets().add("skins/RedSilverSkin.css");
         window.setTitle(properties.getProperty("titleLogInWindow"));
         window.setScene(scene);
@@ -141,47 +163,61 @@ public class LogInWindow extends Application implements IStandardGUIclass {
 
     public void makeLoginButton() {
         loginButton = new Button(properties.getProperty("loginButtonText"));
-        GridPane.setConstraints(loginButton, 1, 6);
+        grid.setConstraints(loginButton, 1, 3);
+    }
+
+    public void makeExitButton() {
+        exitButton = new Button(properties.getProperty("exitButtonText"));
+        grid.setConstraints(exitButton, 1,5);
     }
 
     public void makeNameFields() {
         namelabel = new Label(properties.getProperty("user"));
         namelabel.setId("bold-label");
-        GridPane.setConstraints(namelabel, 0, 0);
+        grid.setConstraints(namelabel, 0, 1);
 
         namefield = new TextField();
         namefield.setPromptText(properties.getProperty("user"));
-        GridPane.setConstraints(namefield, 1, 0);
+        grid.setConstraints(namefield, 1, 1);
     }
 
     public void makePassFields() {
         passlabel = new Label(properties.getProperty("password"));
         passlabel.setId("bold-label");
-        GridPane.setConstraints(passlabel, 0, 1);
+        grid.setConstraints(passlabel, 0, 2);
 
         passfield = new TextField();
         passfield.setPromptText(properties.getProperty("password"));
-        GridPane.setConstraints(passfield, 1, 1);
+        grid.setConstraints(passfield, 1, 2);
+    }
+
+    public void makeDateFields(){
+        stringdatalabel = new Label(properties.getProperty("date"));
+        grid.setConstraints(stringdatalabel, 0, 7);
+
+        datalabel = new Label(" " + dataByRESTful.timeClock);
+        datalabel.setId("bold-label");
+        grid.setConstraints(datalabel, 1, 7);
     }
 
     public void makeSkinMenu(){
         skinMenu = new Menu(properties.getProperty("skin"));
 
-        MenuItem redSkin = new MenuItem("Czerwony");
+        MenuItem redSkin = new MenuItem(properties.getProperty("skinred"));
         redSkin.setOnAction(event -> {
             scene.getStylesheets().clear();
             scene.getStylesheets().add("skins/RedSilverSkin.css");
             window.setScene(scene);
         });
 
-        MenuItem blueSkin = new MenuItem("Niebieska");
+        MenuItem blueSkin = new MenuItem(properties.getProperty("skinblue"));
         blueSkin.setOnAction(event -> {
             scene.getStylesheets().clear();
             scene.getStylesheets().add("skins/BlueWhiteSkin.css");
             window.setScene(scene);
         });
 
-        MenuItem greenSkin = new MenuItem("Zielona");
+        MenuItem greenSkin = new MenuItem(properties.getProperty("skingreen"));
         greenSkin.setOnAction(event -> {
             scene.getStylesheets().clear();
             scene.getStylesheets().add("skins/GreenWhiteSkin.css");
@@ -224,15 +260,18 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         fileMenu.getItems().add(newFile);
     }
 
+
     @Override
     public void makeAllButtons() {
         makeLoginButton();
+        makeExitButton();
     }
 
     @Override
     public void makeAllFields() {
         makePassFields();
         makeNameFields();
+        makeDateFields();
     }
 }
 

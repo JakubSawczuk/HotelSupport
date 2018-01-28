@@ -63,8 +63,8 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
             LogInWindow.layout.getChildren().remove(gridPane);
             basicWindow.setup();
             LogInWindow.layout.setCenter(basicWindow.gridPane);
-            LogInWindow.window.setWidth(200);
-            LogInWindow.window.setHeight(350);
+            LogInWindow.window.setWidth(260);
+            LogInWindow.window.setHeight(300);
         });
     }
 

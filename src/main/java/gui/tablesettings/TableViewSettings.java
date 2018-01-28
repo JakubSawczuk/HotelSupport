@@ -16,10 +16,10 @@ public class TableViewSettings {
     public static javafx.scene.control.TableView<TabRow> newTable(GridPane grid, double height, double prefWidth, double prefHeight) {
         javafx.scene.control.TableView<TabRow> tableView = new javafx.scene.control.TableView<TabRow>();
         tableView.setEditable(true);
-        TableColumn<TabRow, String> first = new TableColumn<TabRow, String>("Nazwa parametru");
+        TableColumn<TabRow, String> first = new TableColumn<TabRow, String>();
         first.setCellValueFactory(new PropertyValueFactory<TabRow, String>("first"));
         first.setMinWidth(125);
-        TableColumn<TabRow, String> second = new TableColumn<TabRow, String>("Wartosc");
+        TableColumn<TabRow, String> second = new TableColumn<TabRow, String>();
         second.setCellValueFactory(new PropertyValueFactory<TabRow, String>("second"));
         tableView.getColumns().addAll(first, second);
         tableView.setPrefSize(prefWidth, prefHeight);

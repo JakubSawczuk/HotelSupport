@@ -4,6 +4,7 @@ import gui.addobject.AddClientWindow;
 import gui.addobject.AddInvoiceWindow;
 import gui.searchobject.EditRoomWindow;
 import gui.searchobject.SearchClientWindow;
+import timewithrest.DataByRESTful;
 
 /**
  * Created by Kuba on 2018-01-17.
@@ -16,6 +17,7 @@ public class InstancesSet {
     private static volatile AddClientWindow instanceAddClientWindow = null;
     private static volatile AddInvoiceWindow instanceAddInvoiceWindow = null;
     private static volatile EditRoomWindow instanceEditRoomWindow = null;
+    private static volatile DataByRESTful instanceDataByRESTful = null;
 
     private InstancesSet() {
     }
@@ -84,6 +86,17 @@ public class InstancesSet {
             }
         }
         return instanceEditRoomWindow;
+    }
+
+    public static DataByRESTful getInstanceDataByRESTful() {
+        if (instanceDataByRESTful == null) {
+            synchronized (DataByRESTful.class) {
+                if (instanceDataByRESTful == null) {
+                    instanceDataByRESTful = new DataByRESTful();
+                }
+            }
+        }
+        return instanceDataByRESTful;
     }
 
 

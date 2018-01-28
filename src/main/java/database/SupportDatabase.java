@@ -1,6 +1,7 @@
 package database;
 
 import exceptions.DuplicatePrimaryKeyException;
+import logger.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -55,9 +56,9 @@ public class SupportDatabase implements Runnable {
         persistenceMap.put("javax.persistence.jdbc.user", databaseConfiguration.get(0).toString());
         persistenceMap.put("javax.persistence.jdbc.password", databaseConfiguration.get(1).toString());
 
-        // ToDo: Do odkomentowania
-        /*Logger.info(databaseConfiguration.get(0).toString());
-        Logger.info(databaseConfiguration.get(1).toString());*/
+
+        Logger.info(databaseConfiguration.get(0).toString());
+        Logger.info(databaseConfiguration.get(1).toString());
 
         entityManagerFactory = Persistence.createEntityManagerFactory("hotel", persistenceMap);
         entityManager = entityManagerFactory.createEntityManager();
