@@ -1,32 +1,49 @@
-.root{
-    -fx-background-color: gainsboro;
+.root {
+    -fx-background-color: #383838;
 }
-.label{
-    -fx-text-fill: black;
-    -fx-text-color: black;
+
+.label {
+    -fx-text-fill: #FFFFFF;
 }
-.button{
-    -fx-background-color: blue;
+
+.button {
+    -fx-background-color: deepskyblue;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 5;
     -fx-pref-width: 150px;
-}
-
-#bold-label{
     -fx-font-weight: bold;
-    -fx-text-color: black;
 }
 
-.menu-bar{
+#bold-label {
+    -fx-font-weight: bold;
+    -fx-text-color: #FFFFFF;
+}
+
+.menu-bar {
+    -fx-background-color: deepskyblue;
+    -fx-font-weight: bold;
+}
+
+.menu-item {
+    -fx-background-color: deepskyblue;
+    -fx-font-weight: bold;
+}
+
+.menu-item.label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.table-view {
     -fx-background-color: blue;
-    -fx-font-weight: bold;
 }
 
-.menu-item{
+.table-row-cell:selected {
     -fx-background-color: blue;
-    -fx-font-weight: bold;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
 }
 
-.table-view{
+.table-view .table-column {
+    -fx-alignment: CENTER;
     -fx-background-color: blue;
 }

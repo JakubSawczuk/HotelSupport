@@ -10,6 +10,7 @@
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 5;
     -fx-pref-width: 150px;
+    -fx-font-weight: bold;
 }
 
 #bold-label{
@@ -28,5 +29,16 @@
 }
 
 .table-view{
+    -fx-background-color: green;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: green;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.table-view .table-column {
+    -fx-alignment: CENTER;
     -fx-background-color: green;
 }

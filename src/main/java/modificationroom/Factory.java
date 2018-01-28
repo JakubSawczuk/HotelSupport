@@ -7,7 +7,7 @@ import database.entity.Room;
  */
 public class Factory {
 
-    //public Room addOrModifyRoom(String action, int numberRoom, boolean avaiable, String comfort, int capacity, boolean clear, float price){
+
     public Room addOrModifyRoom(String action){
         Room room = null;
         if(action.equals("D")){

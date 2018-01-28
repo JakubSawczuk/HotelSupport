@@ -46,13 +46,12 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
     public void setup() {
         gridPane.setVgap(10);
         gridPane.setHgap(3);
-        tableView = TableViewSettings.newTable(gridPane, 192, 170);
-        tableView.setEditable(true);
         gridPane.setPadding(new Insets(10, 20, 5, 20));
 
         makeAllButtons();
         makeAllFields();
         actionSearchRoomButton();
+
 
     }
 
@@ -65,6 +64,8 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
 
     public void actionSearchRoomButton() {
         searchRoomButton.addEventHandler(EditRoomEvent.EDIT_ROOM_EVENT_EVENT_TYPE, event -> {
+            tableView = TableViewSettings.newTable(gridPane, 241, 170);
+            tableView.setEditable(true);
             updateTab(queryGetRoom().get(0));
         });
 

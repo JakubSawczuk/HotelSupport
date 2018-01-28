@@ -1,6 +1,7 @@
 package gui;
 
 import database.SupportDatabase;
+import events.LogInEvent;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -48,7 +49,6 @@ public class LogInWindow extends Application implements IStandardGUIclass {
             exitButton;
 
 
-
     private SupportDatabase supportDatabase = new SupportDatabase();
     static BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
     private DataByRESTful dataByRESTful = InstancesSet.getInstanceDataByRESTful();
@@ -81,7 +81,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
 
     }
 
-    public static void backToBasicWindow(){
+    public static void backToBasicWindow() {
         LogInWindow.layout.getChildren().remove(grid);
         basicWindow.setup();
         LogInWindow.layout.setCenter(basicWindow.gridPane);
@@ -105,27 +105,37 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     }
 
     public void actionLoginButton() {
-        loginButton.setOnAction(event -> {
-            try {
-                (new Thread(supportDatabase)).start();
-                (new Thread(basicWindow)).start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        loginButton.addEventHandler(LogInEvent.LOG_IN_EVENT_EVENT_TYPE, event -> {
+            actionLogInEvent();
+        });
 
-            menuBar.getMenus().remove(languageMenu);
-            basicWindow.runThreadsWindow();
-            layout.getChildren().remove(grid);
-            layout.setCenter(BasicWindow.gridPane);
-            window.setWidth(260);
-            window.setHeight(300);
+        loginButton.setOnAction(event -> {
+            loginButton.fireEvent
+                    (new LogInEvent(LogInEvent.LOG_IN_EVENT_EVENT_TYPE));
         });
     }
 
-    public void actionExitButton(){
+    public void actionExitButton() {
         exitButton.setOnAction(event -> {
             exit(0);
         });
+    }
+
+    public void actionLogInEvent() {
+        try {
+            (new Thread(supportDatabase)).start();
+            (new Thread(basicWindow)).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        menuBar.getMenus().remove(languageMenu);
+        basicWindow.runThreadsWindow();
+        layout.getChildren().remove(grid);
+        layout.setCenter(BasicWindow.gridPane);
+        window.setWidth(260);
+        window.setHeight(300);
     }
 
     @Override
@@ -148,7 +158,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         grid = new GridPane();
         grid.setVgap(10);
         grid.setHgap(3);
-        grid.setPadding(new Insets(0,10,10,10));
+        grid.setPadding(new Insets(0, 10, 10, 10));
         grid.getChildren().addAll(namelabel, namefield, passlabel, passfield,
                 loginButton, exitButton, stringdatalabel, datalabel);
 
@@ -166,11 +176,13 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     public void makeLoginButton() {
         loginButton = new Button(properties.getProperty("loginButtonText"));
         grid.setConstraints(loginButton, 1, 3);
+
+
     }
 
     public void makeExitButton() {
         exitButton = new Button(properties.getProperty("exitButtonText"));
-        grid.setConstraints(exitButton, 1,5);
+        grid.setConstraints(exitButton, 1, 5);
     }
 
     public void makeNameFields() {
@@ -193,7 +205,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         grid.setConstraints(passfield, 1, 2);
     }
 
-    public void makeDateFields(){
+    public void makeDateFields() {
         stringdatalabel = new Label(properties.getProperty("date"));
         grid.setConstraints(stringdatalabel, 0, 7);
 
@@ -202,7 +214,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         grid.setConstraints(datalabel, 1, 7);
     }
 
-    public void makeSkinMenu(){
+    public void makeSkinMenu() {
         skinMenu = new Menu(properties.getProperty("skin"));
 
         MenuItem redSkin = new MenuItem(properties.getProperty("skinred"));
@@ -228,7 +240,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         skinMenu.getItems().addAll(redSkin, blueSkin, greenSkin);
     }
 
-    public void makeLanguageMenu(){
+    public void makeLanguageMenu() {
         languageMenu = new Menu(properties.getProperty("language"));
         ToggleGroup difficultyToggle = new ToggleGroup();
         RadioMenuItem languagePol = new RadioMenuItem(properties.getProperty("pol"));
@@ -255,7 +267,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         languageMenu.getItems().addAll(languagePol, languageAng);
     }
 
-    public void makeFileMenu(){
+    public void makeFileMenu() {
         fileMenu = new Menu(properties.getProperty("fileMenu"));
         MenuItem newFile = new MenuItem(properties.getProperty("close"));
         newFile.setOnAction(e -> exit(0));

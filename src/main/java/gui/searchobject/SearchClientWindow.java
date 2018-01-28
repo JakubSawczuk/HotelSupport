@@ -87,7 +87,6 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
             updateTab(queryGetClient().get(0));
         });
 
-
         searchClientButton.setOnAction(event -> {
             tableView = TableViewSettings.newTable(gridPane, 240, 155);
             searchClientButton.fireEvent
