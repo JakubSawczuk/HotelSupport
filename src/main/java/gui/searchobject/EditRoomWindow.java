@@ -15,7 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
     public GridPane gridPane = new GridPane();
     private TableView<TabRow> tableView = null;
     private Label numberRoomlabel;
-    private TextField numberRoomfield;
+    public TextField numberRoomfield;
     private Button backToBasicWindowButton,
             searchRoomButton;
 
@@ -49,22 +48,28 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
     public void setup() {
         gridPane.setVgap(10);
         gridPane.setHgap(3);
-        tableView = TableViewSettings.newTable(gridPane, 20, 192, 170);
+        tableView = TableViewSettings.newTable(gridPane, 192, 170);
         tableView.setEditable(true);
         gridPane.setPadding(new Insets(10, 20, 5, 20));
 
         makeAllButtons();
         makeAllFields();
+        actionSearchRoomButton();
 
 
-        TypedQuery<Room> queryClient = SupportDatabase.entityManager
-                .createQuery("SELECT r FROM Room r " +
-                        "WHERE numberRoom = 1", Room.class);
-        List<Room> roomList = queryClient.getResultList();
+    }
 
-        updateTab(roomList.get(0));
+    public List<Room> queryGetRoom(){
+        return SupportDatabase.entityManager.createQuery("SELECT r FROM Room r " +
+                        "WHERE numberRoom = ?1", database.entity.Room.class)
+                .setParameter(1, Integer.parseInt(numberRoomfield.getText())).getResultList();
 
+    }
 
+    public void actionSearchRoomButton(){
+        searchRoomButton.setOnAction(event -> {
+            updateTab(queryGetRoom().get(0));
+        });
     }
 
     public void makeNumberRoomFields() {

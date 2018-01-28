@@ -100,17 +100,11 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         loginButton.setOnAction(event -> {
             try {
                 (new Thread(supportDatabase)).start();
-                sleep(3000);
-            } catch (InterruptedException e) {
+                (new Thread(basicWindow)).start();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            try {
-                (new Thread(basicWindow)).start();
-                sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             menuBar.getMenus().remove(languageMenu);
             basicWindow.runThreadsWindow();
             layout.getChildren().remove(grid);

@@ -13,14 +13,15 @@ import javafx.scene.layout.GridPane;
  */
 public class TableViewSettings {
 
-    public static javafx.scene.control.TableView<TabRow> newTable(GridPane grid, double height, double prefWidth, double prefHeight) {
+    public static javafx.scene.control.TableView<TabRow> newTable(GridPane grid, double prefWidth, double prefHeight) {
         javafx.scene.control.TableView<TabRow> tableView = new javafx.scene.control.TableView<TabRow>();
         tableView.setEditable(true);
         TableColumn<TabRow, String> first = new TableColumn<TabRow, String>();
         first.setCellValueFactory(new PropertyValueFactory<TabRow, String>("first"));
-        first.setMinWidth(125);
+        first.setPrefWidth((prefWidth-4)/2);
         TableColumn<TabRow, String> second = new TableColumn<TabRow, String>();
         second.setCellValueFactory(new PropertyValueFactory<TabRow, String>("second"));
+        second.setPrefWidth((prefWidth-4)/2);
         tableView.getColumns().addAll(first, second);
         tableView.setPrefSize(prefWidth, prefHeight);
 

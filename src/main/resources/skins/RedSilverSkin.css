@@ -24,10 +24,13 @@
 }
 
 .table-view{
-    -fx-background-color: #AB4642;
 
+    -fx-background-color: #AB4642;
 }
 
-.table-view .filler {
+
+.table-row-cell:selected {
     -fx-background-color: #AB4642;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
 }
