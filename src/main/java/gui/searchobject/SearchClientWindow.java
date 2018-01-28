@@ -1,6 +1,5 @@
 package gui.searchobject;
 
-import database.SupportDatabase;
 import database.entity.Client;
 import events.SearchClientEvent;
 import gui.ABackToBasicWindow;
@@ -15,8 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-
-import java.util.List;
+import search.client.SearchClientBO;
 
 /**
  * Created by Kuba on 2018-01-16.
@@ -29,6 +27,8 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
     private TextField namefield;
     private Button backToBasicWindowButton,
             searchClientButton;
+
+    private SearchClientBO searchClientBO;
 
     @Override
     public void makeAllButtons() {
@@ -53,13 +53,6 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
         actionSearchClientButton();
 
     }
-
-    private List<Client> queryGetClient() {
-        return SupportDatabase.entityManager.createQuery("SELECT e FROM Client e " +
-                "WHERE Pesel = ?1", database.entity.Client.class)
-                .setParameter(1, namefield.getText()).getResultList();
-    }
-
     private void makeNameFields() {
         namelabel = new Label(LogInWindow.properties.getProperty("client"));
         namelabel.setId("bold-label");
@@ -79,7 +72,7 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
         gridPane.add(backToBasicWindowButton, 2, 6);
 
         backToBasicWindowButton.setOnAction(event -> {
-           SearchClientWindow searchClientWindow =  InstancesSet.getInstanceSearchClientWindow();
+            SearchClientWindow searchClientWindow = InstancesSet.getInstanceSearchClientWindow();
             searchClientWindow.backToBasicWindow(gridPane);
         });
     }
@@ -87,13 +80,14 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
     private void actionSearchClientButton() {
 
         searchClientButton.addEventHandler(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, event -> {
-            updateTab(queryGetClient().get(0));
+            updateTab(searchClientBO.getClientList().get(0));
         });
 
         searchClientButton.setOnAction(event -> {
+            searchClientBO = new SearchClientBO(namefield.getText());
             tableView = TableViewSettings.newTable(gridPane, 240, 155);
             searchClientButton.fireEvent
-                    (new SearchClientEvent(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, queryGetClient().get(0)));
+                    (new SearchClientEvent(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, searchClientBO.getClientList().get(0)));
         });
     }
 

@@ -31,7 +31,7 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
             searchRoomButton;
 
     @Override
-    public void run(){
+    public void run() {
     }
 
     @Override
@@ -53,8 +53,6 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
         makeAllButtons();
         makeAllFields();
         actionSearchRoomButton();
-
-
     }
 
     private List<Room> queryGetRoom() {

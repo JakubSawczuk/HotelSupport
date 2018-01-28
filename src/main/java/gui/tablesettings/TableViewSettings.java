@@ -26,7 +26,7 @@ public class TableViewSettings {
         tableView.getColumns().addAll(first, second);
         tableView.setPrefSize(prefWidth, prefHeight);
 
-        
+
         if (LogInWindow.window.getTitle().equals("Edytowanie pokoju") || LogInWindow.window.getTitle().equals("Edit room")) {
             second.setCellFactory(TextFieldTableCell.forTableColumn());
             second.setOnEditCommit(

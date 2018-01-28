@@ -5,8 +5,8 @@ package gui.tablesettings;
  */
 public class TabRow {
 
-    private  String first;
-    private  String second;
+    private String first;
+    private String second;
 
     public TabRow(String first, String second) {
         this.first = first;
@@ -22,11 +22,11 @@ public class TabRow {
     }
 
 
-    public void setFirst(String first){
+    public void setFirst(String first) {
         this.first = first;
     }
 
-    public void setSecond(String second){
+    public void setSecond(String second) {
         this.second = second;
     }
 }
