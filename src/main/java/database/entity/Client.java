@@ -61,6 +61,7 @@ public class Client {
     }
 
     public void show(){
+
         if(Pesel != null) System.out.println("Pesel: " + Pesel);
         if(firstName != null) System.out.println("Imie: " + firstName);
         if(surName != null) System.out.println("Nazwisko: " + surName);

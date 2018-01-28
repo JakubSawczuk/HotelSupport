@@ -38,6 +38,16 @@ public class SupportDatabase implements Runnable {
         }
     }
 
+    public static void persistSimpleObject(Object obj){
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(obj);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void logInToDatabase() {
         List databaseConfiguration = parseXML();

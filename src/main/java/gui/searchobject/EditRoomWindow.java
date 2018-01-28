@@ -100,11 +100,24 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
     }
 
     private void updateTab(Room room) {
+        String yesOrNoAvaialbe, yesOrNotIsClear;
+        if (room.isAvailable()) {
+            yesOrNoAvaialbe = "Tak";
+        } else {
+            yesOrNoAvaialbe = "Nie";
+        }
+
+        if (room.isClear()) {
+            yesOrNotIsClear = "Tak";
+        } else {
+            yesOrNotIsClear = "Nie";
+        }
+
         tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("numberRoom"), Integer.toString(room.getNumberRoom())));
-        tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("available"), Boolean.toString(room.isAvailable())));
+        tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("available"), yesOrNoAvaialbe));
         tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("comfort"), room.getComfort()));
         tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("capacity"), Integer.toString(room.getCapacity())));
-        tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("clear"), Boolean.toString(room.isClear())));
+        tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("clear"), yesOrNotIsClear));
         tableView.getItems().add(new TabRow(LogInWindow.properties.getProperty("price"), Float.toString(room.getPrice())));
     }
 }

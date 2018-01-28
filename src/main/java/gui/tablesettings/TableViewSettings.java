@@ -1,5 +1,8 @@
 package gui.tablesettings;
 
+import database.SupportDatabase;
+import database.entity.Room;
+import gui.NewAlert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -22,24 +25,47 @@ public class TableViewSettings {
         tableView.setPrefSize(prefWidth, prefHeight);
 
 
+        first.setOnEditCommit(event -> {
 
-        first.setCellFactory(TextFieldTableCell.forTableColumn());
-        first.setOnEditCommit(
-                event -> ((TabRow)event.getTableView().getItems().get(event.getTablePosition().getRow())
-                ).setFirst(event.getNewValue())
-        );
+        });
 
         second.setCellFactory(TextFieldTableCell.forTableColumn());
         second.setOnEditCommit(
-                event -> ((TabRow)event.getTableView().getItems().get(event.getTablePosition().getRow())
-                ).setSecond(event.getNewValue())
-        );
+                event -> {
+                    ((TabRow) event.getTableView().getItems().get(event.getTablePosition().getRow())
+                    ).setSecond(event.getNewValue());
+
+                    try {
+                        Room room = SupportDatabase.entityManager.find(Room.class, Integer.parseInt(tableView.getItems().get(0).getSecond()));
+                        if (event.getTablePosition().getRow() == 1) {
+                            if (event.getNewValue().equals("tak") || event.getNewValue().equals("Tak")) {
+                                room.setAvailable(true);
+                            } else if (event.getNewValue().equals("nie") || event.getNewValue().equals("Nie")) {
+                                room.setAvailable(false);
+                            }
+                        } else if (event.getTablePosition().getRow() == 2) {
+                            room.setComfort(event.getNewValue());
+                        } else if (event.getTablePosition().getRow() == 3) {
+                            room.setCapacity(Integer.parseInt(event.getNewValue()));
+                        } else if (event.getTablePosition().getRow() == 4) {
+                            if (event.getNewValue().equals("tak") || event.getNewValue().equals("Tak")) {
+                                room.setClear(true);
+                            } else if (event.getNewValue().equals("nie") || event.getNewValue().equals("Nie")) {
+                                room.setClear(false);
+                            }
+                        }
+                        SupportDatabase.persistSimpleObject(room);
+                        new NewAlert("Information", null, "Edycja zakonczyla sie sukcesem");
+                    } catch (Exception e) {
+                        new NewAlert("Error", "Blad w zmianie pokoju",
+                                "Nieoczekiwany blad edycji pokoju");
+                    }
+
+
+                });
 
 
         grid.add(tableView, 0, 2, 3, 1);
         return tableView;
     }
-
-
-
 }
