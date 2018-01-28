@@ -2,9 +2,8 @@ package gui.searchobject;
 
 import database.SupportDatabase;
 import database.entity.Room;
-import gui.BasicWindow;
+import events.EditRoomEvent;
 import gui.IStandardGUIclass;
-import gui.InstancesSet;
 import gui.LogInWindow;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
@@ -30,8 +29,7 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
             searchRoomButton;
 
     @Override
-    public void run() {
-        System.out.println("Odpalilem searchRoomWindow");
+    public void run(){
     }
 
     @Override
@@ -56,19 +54,23 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
         makeAllFields();
         actionSearchRoomButton();
 
-
     }
 
-    public List<Room> queryGetRoom(){
+    public List<Room> queryGetRoom() {
         return SupportDatabase.entityManager.createQuery("SELECT r FROM Room r " +
-                        "WHERE numberRoom = ?1", database.entity.Room.class)
+                "WHERE numberRoom = ?1", database.entity.Room.class)
                 .setParameter(1, Integer.parseInt(numberRoomfield.getText())).getResultList();
 
     }
 
-    public void actionSearchRoomButton(){
-        searchRoomButton.setOnAction(event -> {
+    public void actionSearchRoomButton() {
+        searchRoomButton.addEventHandler(EditRoomEvent.EDIT_ROOM_EVENT_EVENT_TYPE, event -> {
             updateTab(queryGetRoom().get(0));
+        });
+
+        searchRoomButton.setOnAction(event -> {
+            searchRoomButton.fireEvent
+                    (new EditRoomEvent(EditRoomEvent.EDIT_ROOM_EVENT_EVENT_TYPE, queryGetRoom().get(0)));
         });
     }
 
@@ -78,7 +80,6 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
         numberRoomlabel.setPrefWidth(80);
         gridPane.add(numberRoomlabel, 1, 1);
 
-
         numberRoomfield = new TextField();
         numberRoomfield.setPromptText(LogInWindow.properties.getProperty("numberRoom"));
         numberRoomfield.setPrefWidth(70);
@@ -86,16 +87,11 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
     }
 
     public void makeBackToWindowButton() {
-        BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 7);
 
         backToBasicWindowButton.setOnAction(event -> {
-            LogInWindow.layout.getChildren().remove(gridPane);
-            basicWindow.setup();
-            LogInWindow.layout.setCenter(basicWindow.gridPane);
-            LogInWindow.window.setWidth(260);
-            LogInWindow.window.setHeight(300);
+            LogInWindow.backToBasicWindow();
         });
     }
 

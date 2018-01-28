@@ -25,6 +25,7 @@ import static java.lang.Thread.sleep;
  */
 public class LogInWindow extends Application implements IStandardGUIclass {
 
+    public static Properties properties;
     static public Stage window;
     static public BorderPane layout;
     private MenuBar menuBar;
@@ -45,14 +46,12 @@ public class LogInWindow extends Application implements IStandardGUIclass {
 
     private Button loginButton,
             exitButton;
-    public static Properties properties;
 
 
 
-
-    SupportDatabase supportDatabase = new SupportDatabase();
-    BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
-    DataByRESTful dataByRESTful = InstancesSet.getInstanceDataByRESTful();
+    private SupportDatabase supportDatabase = new SupportDatabase();
+    static BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
+    private DataByRESTful dataByRESTful = InstancesSet.getInstanceDataByRESTful();
 
     public static void main(String[] args) {
         launch(args);
@@ -64,7 +63,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         (new Thread(dataByRESTful)).start();
         sleep(2700);
         window = primaryStage;
-        readProperties("src\\main\\resources\\pol.properties");
+        readLanguageProperties("src\\main\\resources\\pol.properties");
         setup();
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -82,8 +81,17 @@ public class LogInWindow extends Application implements IStandardGUIclass {
 
     }
 
+    public static void backToBasicWindow(){
+        LogInWindow.layout.getChildren().remove(grid);
+        basicWindow.setup();
+        LogInWindow.layout.setCenter(basicWindow.gridPane);
+        LogInWindow.window.setWidth(260);
+        LogInWindow.window.setHeight(300);
+        LogInWindow.window.setTitle(properties.getProperty("titleLogInWindow"));
+    }
 
-    public void readProperties(String path) {
+
+    public void readLanguageProperties(String path) {
         FileReader reader;
         properties = new Properties();
         try {
@@ -225,7 +233,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         ToggleGroup difficultyToggle = new ToggleGroup();
         RadioMenuItem languagePol = new RadioMenuItem(properties.getProperty("pol"));
         languagePol.setOnAction(event -> {
-            readProperties("src\\main\\resources\\pol.properties");
+            readLanguageProperties("src\\main\\resources\\pol.properties");
             layout.getChildren().remove(grid);
             layout.getChildren().remove(menuBar);
             setup();
@@ -233,7 +241,7 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         });
         RadioMenuItem languageAng = new RadioMenuItem(properties.getProperty("eng"));
         languageAng.setOnAction(event -> {
-            readProperties("src\\main\\resources\\ang.properties");
+            readLanguageProperties("src\\main\\resources\\ang.properties");
             layout.getChildren().remove(grid);
             layout.getChildren().remove(menuBar);
             setup();

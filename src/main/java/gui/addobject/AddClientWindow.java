@@ -1,12 +1,15 @@
 package gui.addobject;
 
-import addclient.Builder;
-import addclient.ClientAdded;
-import addclient.Director;
+import add.client.BuilderClient;
+import add.client.ClientAdded;
+import add.client.Director;
 import database.SupportDatabase;
 import database.entity.Client;
+import events.ClientAddedEvent;
 import exceptions.DuplicatePrimaryKeyException;
-import gui.*;
+import gui.IStandardGUIclass;
+import gui.LogInWindow;
+import gui.NewAlert;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +39,8 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
     private Button backToBasicWindowButton,
             addClientButton;
 
+    private Client client;
+
 
     public void setup() {
         gridPane = new GridPane();
@@ -46,12 +51,16 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         makeAllFields();
         makeAllButtons();
 
+        addClientButton.addEventHandler(ClientAddedEvent.CLIENT_ADDED_EVENT_EVENT_TYPE, event -> {
+            addToDatabase();
+        });
+
     }
 
     public void addToDatabase(){
         Director director = new Director();
-        Builder builder = new ClientAdded();
-        director.setBuilder(builder);
+        BuilderClient builderClient = new ClientAdded();
+        director.setBuilderClient(builderClient);
         director.addClientToDatabase(peselfield.getText(), companyNamefield.getText(),
                 firstnamefield.getText(), surnamefield.getText(), NIPfield.getText());
         Client client = director.getClient();
@@ -141,21 +150,17 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         gridPane.add(addClientButton, 2, 10);
 
         addClientButton.setOnAction(event -> {
-            addToDatabase();
+            addClientButton.fireEvent(new ClientAddedEvent(ClientAddedEvent.CLIENT_ADDED_EVENT_EVENT_TYPE, client));
         });
+
     }
 
     public void makeBackToWindowButton() {
-        BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 12);
 
         backToBasicWindowButton.setOnAction(event -> {
-            LogInWindow.layout.getChildren().remove(gridPane);
-            basicWindow.setup();
-            LogInWindow.layout.setCenter(basicWindow.gridPane);
-            LogInWindow.window.setWidth(260);
-            LogInWindow.window.setHeight(300);
+            LogInWindow.backToBasicWindow();
         });
     }
 
@@ -164,6 +169,5 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
 
     @Override
     public void run() {
-        System.out.println("Odpalilem addClientWindow");
     }
 }

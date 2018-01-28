@@ -1,12 +1,12 @@
-package addclient;
+package add.client;
 
 import database.entity.Client;
 
 /**
  * Created by Kuba on 2018-01-14.
  */
-// budowniczy
-public abstract class Builder {
+
+public abstract class BuilderClient {
 
     protected Client client;
 

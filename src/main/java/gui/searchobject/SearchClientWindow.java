@@ -2,9 +2,8 @@ package gui.searchobject;
 
 import database.SupportDatabase;
 import database.entity.Client;
-import gui.BasicWindow;
+import events.SearchClientEvent;
 import gui.IStandardGUIclass;
-import gui.InstancesSet;
 import gui.LogInWindow;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
@@ -29,7 +28,6 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
     private Button backToBasicWindowButton,
             searchClientButton;
 
-
     @Override
     public void makeAllButtons() {
         makeBackToWindowButton();
@@ -45,19 +43,18 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
         gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(3);
-        tableView = TableViewSettings.newTable(gridPane, 240, 155);
         gridPane.setPadding(new Insets(10, 20, 5, 20));
-
 
         makeAllButtons();
         makeAllFields();
+
         actionSearchClientButton();
 
     }
 
     public List<Client> queryGetClient() {
         return SupportDatabase.entityManager.createQuery("SELECT e FROM Client e " +
-                        "WHERE Pesel = ?1", database.entity.Client.class)
+                "WHERE Pesel = ?1", database.entity.Client.class)
                 .setParameter(1, namefield.getText()).getResultList();
     }
 
@@ -76,22 +73,25 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
     }
 
     public void makeBackToWindowButton() {
-        BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 6);
 
         backToBasicWindowButton.setOnAction(event -> {
-            LogInWindow.layout.getChildren().remove(gridPane);
-            basicWindow.setup();
-            LogInWindow.layout.setCenter(basicWindow.gridPane);
-            LogInWindow.window.setWidth(260);
-            LogInWindow.window.setHeight(300);
+            LogInWindow.backToBasicWindow();
         });
     }
 
     public void actionSearchClientButton() {
-        searchClientButton.setOnAction(event -> {
+
+        searchClientButton.addEventHandler(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, event -> {
             updateTab(queryGetClient().get(0));
+        });
+
+
+        searchClientButton.setOnAction(event -> {
+            tableView = TableViewSettings.newTable(gridPane, 240, 155);
+            searchClientButton.fireEvent
+                    (new SearchClientEvent(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, queryGetClient().get(0)));
         });
     }
 
@@ -110,19 +110,6 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
 
     @Override
     public void run() {
-        System.out.println("Odpalilem showClientWindow");
 
     }
-
-    // jak sie wcisnie enter
-    /*LogInWindow.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent event) {
-            switch (event.getCode()) {
-                case ENTER:
-                    System.out.println("trololo");
-                    break;
-            }
-        }
-    });*/
 }

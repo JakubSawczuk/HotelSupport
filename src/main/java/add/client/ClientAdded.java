@@ -1,9 +1,9 @@
-package addclient;
+package add.client;
 
 /**
  * Created by Kuba on 2018-01-14.
  */
-public class ClientAdded extends Builder {
+public class ClientAdded extends BuilderClient {
 
     public void setPesel(String pesel) {
         client.setPesel(pesel);

@@ -1,14 +1,22 @@
 package gui.addobject;
 
-import gui.BasicWindow;
+
+import database.SupportDatabase;
+import database.entity.Client;
+import database.entity.Invoice;
+import database.entity.Room;
+import events.InvoiceAddedEvent;
 import gui.IStandardGUIclass;
-import gui.InstancesSet;
 import gui.LogInWindow;
+import gui.NewAlert;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+
+import java.time.LocalDateTime;
+
 
 /**
  * Created by Kuba on 2018-01-27.
@@ -26,6 +34,10 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
 
     private Button backToBasicWindowButton,
             addInvoicetButton;
+
+    private Invoice invoice;
+    private Client client;
+    private Room room;
 
     @Override
     public void makeAllFields() {
@@ -47,24 +59,23 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
 
         makeAllButtons();
         makeAllFields();
+        actionInvoiceButton();
+
+        addInvoicetButton.addEventHandler(InvoiceAddedEvent.ADD_INVOICE_EVENT_EVENT_TYPE, event -> {
+            addToDatabase();
+        });
     }
 
     @Override
-    public void run() {
-        System.out.println("Odpalilem addInvoiceWindow");
+    public void run(){
     }
 
     public void makeBackToWindowButton() {
-        BasicWindow basicWindow = InstancesSet.getInstanceBasicWindow();
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 7);
 
         backToBasicWindowButton.setOnAction(event -> {
-            LogInWindow.layout.getChildren().remove(gridPane);
-            basicWindow.setup();
-            LogInWindow.layout.setCenter(basicWindow.gridPane);
-            LogInWindow.window.setWidth(260);
-            LogInWindow.window.setHeight(300);
+            LogInWindow.backToBasicWindow();
         });
     }
 
@@ -114,6 +125,38 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
     public void makeAddInvoiceButton() {
         addInvoicetButton = new Button(LogInWindow.properties.getProperty("addInvoiceButton"));
         gridPane.add(addInvoicetButton, 2, 4);
+    }
+
+    public void actionInvoiceButton(){
+        addInvoicetButton.setOnAction(event -> {
+            addInvoicetButton.fireEvent(new InvoiceAddedEvent(InvoiceAddedEvent.ADD_INVOICE_EVENT_EVENT_TYPE,
+                    invoice, room, client));
+        });
+    }
+
+    public void addToDatabase(){
+
+        invoice = new Invoice();
+        client = new Client();
+        room = new Room();
+
+        client.setPesel(peselfield.getText());
+        room.setNumberRoom(Integer.parseInt(numbeRoomfield.getText()));
+        invoice.setDateInsue(java.time.LocalDateTime.now());
+        invoice.setDateExpiration(LocalDateTime.now().plusDays(Long.parseLong(howManyDaysfield.getText())));
+        invoice.setRoom(room);
+        invoice.setClient(client);
+
+        try {
+            SupportDatabase.persistSimpleObject(invoice);
+            new NewAlert("Information", "Zamowienie zostalo dodane",
+                    "Zamowienie zostalo pomyslnie dodane");
+        } catch (Exception e) {
+            new NewAlert("Error", "Zamowienie nie zostalo dodane",
+                    "Zamowienie nie zostalo dodane \n"+
+                    "Sprobuj ponownie");
+        }
+
     }
 
 }

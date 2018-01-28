@@ -102,6 +102,5 @@ public class SupportDatabase implements Runnable {
     @Override
     public void run() {
         logInToDatabase();
-        System.out.println("Loguje sie do bazy");
     }
 }
