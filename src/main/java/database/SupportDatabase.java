@@ -38,7 +38,7 @@ public class SupportDatabase implements Runnable {
         }
     }
 
-    public static void persistSimpleObject(Object obj){
+    public static void persistSimpleObject(Object obj) {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(obj);
@@ -49,18 +49,22 @@ public class SupportDatabase implements Runnable {
     }
 
 
-    public void logInToDatabase() {
+    private void logInToDatabase() {
         List databaseConfiguration = parseXML();
-        Map<String, String> persistenceMap = new HashMap<String, String>();
+        Map<String, String> persistenceMap = new HashMap<>();
         persistenceMap.put("javax.persistence.jdbc.user", databaseConfiguration.get(0).toString());
         persistenceMap.put("javax.persistence.jdbc.password", databaseConfiguration.get(1).toString());
+
+        // ToDo: Do odkomentowania
+        /*Logger.info(databaseConfiguration.get(0).toString());
+        Logger.info(databaseConfiguration.get(1).toString());*/
 
         entityManagerFactory = Persistence.createEntityManagerFactory("hotel", persistenceMap);
         entityManager = entityManagerFactory.createEntityManager();
     }
 
 
-    public List<String> parseXML() {
+    private List<String> parseXML() {
         List loginAndPassword = new ArrayList();
         try {
             File file = new File("src\\main\\resources\\database.xml");
@@ -84,7 +88,7 @@ public class SupportDatabase implements Runnable {
                 NodeList passwordElement = passwordElemtsItemFromList.getChildNodes();
 
                 loginAndPassword.add((loginElement.item(0)).getNodeValue());
-                loginAndPassword.add(( passwordElement.item(0)).getNodeValue());
+                loginAndPassword.add((passwordElement.item(0)).getNodeValue());
 
             }
         } catch (Exception e) {
