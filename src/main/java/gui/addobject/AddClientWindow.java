@@ -1,9 +1,12 @@
 package gui.addobject;
 
-import gui.BasicWindow;
-import gui.IStandardGUIclass;
-import gui.InstancesSet;
-import gui.LogInWindow;
+import addclient.Builder;
+import addclient.ClientAdded;
+import addclient.Director;
+import database.SupportDatabase;
+import database.entity.Client;
+import exceptions.DuplicatePrimaryKeyException;
+import gui.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,6 +45,22 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
 
         makeAllFields();
         makeAllButtons();
+
+    }
+
+    public void addToDatabase(){
+        Director director = new Director();
+        Builder builder = new ClientAdded();
+        director.setBuilder(builder);
+        director.addClientToDatabase(peselfield.getText(), companyNamefield.getText(),
+                firstnamefield.getText(), surnamefield.getText(), NIPfield.getText());
+        Client client = director.getClient();
+
+        try {
+            SupportDatabase.persistObject(client, peselfield.getText());
+            new NewAlert("Information", "Klient zosal dodany",
+                    "Klient zostal prawidlowo dodany");
+        } catch (DuplicatePrimaryKeyException e) {}
 
     }
 
@@ -120,6 +139,10 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
     public void makeAddClientButton() {
         addClientButton = new Button(LogInWindow.properties.getProperty("addClient"));
         gridPane.add(addClientButton, 2, 10);
+
+        addClientButton.setOnAction(event -> {
+            addToDatabase();
+        });
     }
 
     public void makeBackToWindowButton() {
