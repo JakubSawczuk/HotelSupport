@@ -6,9 +6,7 @@ import database.entity.Client;
 import database.entity.Invoice;
 import database.entity.Room;
 import events.InvoiceAddedEvent;
-import gui.IStandardGUIclass;
-import gui.LogInWindow;
-import gui.NewAlert;
+import gui.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +19,7 @@ import java.time.LocalDateTime;
 /**
  * Created by Kuba on 2018-01-27.
  */
-public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
+public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IStandardGUIclass {
 
     public GridPane gridPane = new GridPane();
     private Label pesellabel,
@@ -75,7 +73,8 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
         gridPane.add(backToBasicWindowButton, 2, 7);
 
         backToBasicWindowButton.setOnAction(event -> {
-            LogInWindow.backToBasicWindow();
+            AddInvoiceWindow addInvoiceWindow = InstancesSet.getInstanceAddInvoiceWindow();
+            addInvoiceWindow.backToBasicWindow(gridPane);
         });
     }
 

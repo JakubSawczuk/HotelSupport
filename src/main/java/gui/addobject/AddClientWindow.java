@@ -7,9 +7,7 @@ import database.SupportDatabase;
 import database.entity.Client;
 import events.ClientAddedEvent;
 import exceptions.DuplicatePrimaryKeyException;
-import gui.IStandardGUIclass;
-import gui.LogInWindow;
-import gui.NewAlert;
+import gui.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +17,7 @@ import javafx.scene.layout.GridPane;
 /**
  * Created by Kuba on 2018-01-27.
  */
-public class AddClientWindow implements Runnable, IStandardGUIclass {
+public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIclass, Runnable {
 
     public GridPane gridPane = new GridPane();
 
@@ -160,7 +158,8 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         gridPane.add(backToBasicWindowButton, 2, 12);
 
         backToBasicWindowButton.setOnAction(event -> {
-            LogInWindow.backToBasicWindow();
+            AddClientWindow addClientWindow = InstancesSet.getInstanceAddClientWindow();
+            addClientWindow.backToBasicWindow(gridPane);
         });
     }
 

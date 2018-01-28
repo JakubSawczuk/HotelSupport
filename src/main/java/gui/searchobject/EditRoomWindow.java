@@ -3,7 +3,9 @@ package gui.searchobject;
 import database.SupportDatabase;
 import database.entity.Room;
 import events.EditRoomEvent;
+import gui.ABackToBasicWindow;
 import gui.IStandardGUIclass;
+import gui.InstancesSet;
 import gui.LogInWindow;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
@@ -19,7 +21,7 @@ import java.util.List;
 /**
  * Created by Kuba on 2018-01-27.
  */
-public class EditRoomWindow implements Runnable, IStandardGUIclass {
+public class EditRoomWindow extends ABackToBasicWindow implements Runnable, IStandardGUIclass {
 
     public GridPane gridPane = new GridPane();
     private TableView<TabRow> tableView = null;
@@ -92,7 +94,8 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
         gridPane.add(backToBasicWindowButton, 2, 7);
 
         backToBasicWindowButton.setOnAction(event -> {
-            LogInWindow.backToBasicWindow();
+            EditRoomWindow editRoomWindow = InstancesSet.getInstanceEditRoomWindow();
+            editRoomWindow.backToBasicWindow(gridPane);
         });
     }
 
