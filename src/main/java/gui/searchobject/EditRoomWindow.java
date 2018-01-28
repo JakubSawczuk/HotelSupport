@@ -24,7 +24,7 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
     public GridPane gridPane = new GridPane();
     private TableView<TabRow> tableView = null;
     private Label numberRoomlabel;
-    public TextField numberRoomfield;
+    private TextField numberRoomfield;
     private Button backToBasicWindowButton,
             searchRoomButton;
 
@@ -55,14 +55,14 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
 
     }
 
-    public List<Room> queryGetRoom() {
+    private List<Room> queryGetRoom() {
         return SupportDatabase.entityManager.createQuery("SELECT r FROM Room r " +
                 "WHERE numberRoom = ?1", database.entity.Room.class)
                 .setParameter(1, Integer.parseInt(numberRoomfield.getText())).getResultList();
 
     }
 
-    public void actionSearchRoomButton() {
+    private void actionSearchRoomButton() {
         searchRoomButton.addEventHandler(EditRoomEvent.EDIT_ROOM_EVENT_EVENT_TYPE, event -> {
             tableView = TableViewSettings.newTable(gridPane, 241, 170);
             tableView.setEditable(true);
@@ -75,7 +75,7 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
         });
     }
 
-    public void makeNumberRoomFields() {
+    private void makeNumberRoomFields() {
         numberRoomlabel = new Label(LogInWindow.properties.getProperty("numberRoom"));
         numberRoomlabel.setId("bold-label");
         numberRoomlabel.setPrefWidth(80);
@@ -87,7 +87,7 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
         gridPane.add(numberRoomfield, 2, 1);
     }
 
-    public void makeBackToWindowButton() {
+    private void makeBackToWindowButton() {
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 7);
 
@@ -96,7 +96,7 @@ public class EditRoomWindow implements Runnable, IStandardGUIclass {
         });
     }
 
-    public void makeSearchRoomButton() {
+    private void makeSearchRoomButton() {
         searchRoomButton = new Button(LogInWindow.properties.getProperty("searchRoomButton"));
         gridPane.add(searchRoomButton, 2, 3);
     }

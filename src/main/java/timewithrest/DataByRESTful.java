@@ -27,7 +27,7 @@ public class DataByRESTful implements Runnable {
             }
     }
 
-    public void reformatData(){
+    private void reformatData(){
         timeClock = dataByRESTful.getTime().substring(0,11);
         System.out.println(timeClock);
     }

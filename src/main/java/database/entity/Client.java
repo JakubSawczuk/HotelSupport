@@ -10,12 +10,13 @@ import javax.persistence.Id;
 public class Client {
 
     @Id
+    private
     String Pesel;
 
-    String firstName,
-            surName,
-            companyName,
-            NIP;
+    private String firstName;
+    private String surName;
+    private String companyName;
+    private String NIP;
 
     public Client() {
     }

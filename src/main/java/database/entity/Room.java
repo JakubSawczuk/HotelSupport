@@ -1,9 +1,11 @@
 package database.entity;
 
-import com.sun.istack.internal.NotNull;
 import modificationroom.RoomI;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by Kuba on 2017-12-19.
@@ -12,16 +14,18 @@ import javax.persistence.*;
 public class Room implements RoomI{
 
     @Id
+    private
     int numberRoom;
 
-    boolean isAvailable,
-             isClear;
-    String comfort;
-    int capacity;
-    float price;
+    private boolean isAvailable;
+    private boolean isClear;
+    private String comfort;
+    private int capacity;
+    private float price;
 
     @ManyToOne
     @JoinColumn(name = "invoices")
+    private
     Invoice invoice;
 
     public int getNumberRoom() {

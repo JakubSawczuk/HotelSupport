@@ -15,13 +15,13 @@ import javafx.scene.layout.GridPane;
 public class TableViewSettings {
 
     public static javafx.scene.control.TableView<TabRow> newTable(GridPane grid, double prefWidth, double prefHeight) {
-        javafx.scene.control.TableView<TabRow> tableView = new javafx.scene.control.TableView<TabRow>();
+        javafx.scene.control.TableView<TabRow> tableView = new javafx.scene.control.TableView<>();
         tableView.setEditable(true);
-        TableColumn<TabRow, String> first = new TableColumn<TabRow, String>();
-        first.setCellValueFactory(new PropertyValueFactory<TabRow, String>("first"));
+        TableColumn<TabRow, String> first = new TableColumn<>();
+        first.setCellValueFactory(new PropertyValueFactory<>("first"));
         first.setPrefWidth((prefWidth - 4) / 2);
-        TableColumn<TabRow, String> second = new TableColumn<TabRow, String>();
-        second.setCellValueFactory(new PropertyValueFactory<TabRow, String>("second"));
+        TableColumn<TabRow, String> second = new TableColumn<>();
+        second.setCellValueFactory(new PropertyValueFactory<>("second"));
         second.setPrefWidth((prefWidth - 4) / 2);
         tableView.getColumns().addAll(first, second);
         tableView.setPrefSize(prefWidth, prefHeight);
@@ -31,8 +31,7 @@ public class TableViewSettings {
             second.setCellFactory(TextFieldTableCell.forTableColumn());
             second.setOnEditCommit(
                     event -> {
-                        ((TabRow) event.getTableView().getItems().get(event.getTablePosition().getRow())
-                        ).setSecond(event.getNewValue());
+                        event.getTableView().getItems().get(event.getTablePosition().getRow()).setSecond(event.getNewValue());
 
                         try {
                             Room room = SupportDatabase.entityManager.find(Room.class, Integer.parseInt(tableView.getItems().get(0).getSecond()));

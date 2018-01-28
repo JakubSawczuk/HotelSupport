@@ -16,14 +16,14 @@ import static java.lang.Thread.sleep;
 public class BasicWindow implements Runnable, IStandardGUIclass {
 
     public static GridPane gridPane = new GridPane();
-    Button addClientButton;
-    Button searchClientButton;
-    Button addInvoiceButton;
-    Button editRoomButton;
-    SearchClientWindow searchClientWindow = InstancesSet.getInstanceSearchClientWindow();
-    AddClientWindow addClientWindow = InstancesSet.getInstanceAddClientWindow();
-    AddInvoiceWindow addInvoiceWindow = InstancesSet.getInstanceAddInvoiceWindow();
-    EditRoomWindow editRoomWindow = InstancesSet.getInstanceEditRoomWindow();
+    private Button addClientButton;
+    private Button searchClientButton;
+    private Button addInvoiceButton;
+    private Button editRoomButton;
+    private SearchClientWindow searchClientWindow = InstancesSet.getInstanceSearchClientWindow();
+    private AddClientWindow addClientWindow = InstancesSet.getInstanceAddClientWindow();
+    private AddInvoiceWindow addInvoiceWindow = InstancesSet.getInstanceAddInvoiceWindow();
+    private EditRoomWindow editRoomWindow = InstancesSet.getInstanceEditRoomWindow();
 
     public void runThreadsWindow() {
         try {
@@ -39,14 +39,14 @@ public class BasicWindow implements Runnable, IStandardGUIclass {
         }
     }
 
-    public void configureActionWindow(int width, int height, String title) {
+    private void configureActionWindow(int width, int height, String title) {
         LogInWindow.layout.getChildren().remove(gridPane);
         LogInWindow.window.setWidth(width);
         LogInWindow.window.setHeight(height);
         LogInWindow.window.setTitle(title);
     }
 
-    public void buttonActions() {
+    private void buttonActions() {
 
         editRoomButton.setOnAction(event -> {
             editRoomWindow.setup();
@@ -106,22 +106,22 @@ public class BasicWindow implements Runnable, IStandardGUIclass {
         buttonActions();
     }
 
-    public void makeEditRoomButton() {
+    private void makeEditRoomButton() {
         editRoomButton = new Button(LogInWindow.properties.getProperty("editRoom"));
         GridPane.setConstraints(editRoomButton, 1, 10);
     }
 
-    public void makeAddInvoiceButton() {
+    private void makeAddInvoiceButton() {
         addInvoiceButton = new Button(LogInWindow.properties.getProperty("addInvoice"));
         GridPane.setConstraints(addInvoiceButton, 1, 7);
     }
 
-    public void makeSearchClientButton() {
+    private void makeSearchClientButton() {
         searchClientButton = new Button(LogInWindow.properties.getProperty("searchClient"));
         GridPane.setConstraints(searchClientButton, 1, 4);
     }
 
-    public void makeAddClientButton() {
+    private void makeAddClientButton() {
         addClientButton = new Button(LogInWindow.properties.getProperty("addClient"));
         GridPane.setConstraints(addClientButton, 1, 1);
     }

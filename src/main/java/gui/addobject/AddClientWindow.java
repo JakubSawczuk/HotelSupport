@@ -57,7 +57,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
 
     }
 
-    public void addToDatabase(){
+    private void addToDatabase(){
         Director director = new Director();
         BuilderClient builderClient = new ClientAdded();
         director.setBuilderClient(builderClient);
@@ -86,7 +86,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         makeAddClientButton();
     }
 
-    public void makePeselFields() {
+    private void makePeselFields() {
         pesellabel = new Label("PESEL:");
         pesellabel.setId("bold-label");
         gridPane.add(pesellabel, 1, 1);
@@ -97,7 +97,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         gridPane.add(peselfield, 2, 1);
     }
 
-    public void makeFirstnameFields() {
+    private void makeFirstnameFields() {
         firstnamelabel = new Label(LogInWindow.properties.getProperty("firstname"));
         firstnamelabel.setPrefWidth(80);
         firstnamelabel.setId("bold-label");
@@ -109,7 +109,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         gridPane.add(firstnamefield, 2, 3);
     }
 
-    public void makeSurnameFields() {
+    private void makeSurnameFields() {
         surnamelabel = new Label(LogInWindow.properties.getProperty("surname"));
         surnamelabel.setPrefWidth(80);
         surnamelabel.setId("bold-label");
@@ -121,7 +121,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         gridPane.add(surnamefield, 2, 5);
     }
 
-    public void makeCompanyNameFields() {
+    private void makeCompanyNameFields() {
         companyNamelabel = new Label(LogInWindow.properties.getProperty("companyName"));
         companyNamelabel.setPrefWidth(80);
         companyNamelabel.setId("bold-label");
@@ -133,7 +133,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         gridPane.add(companyNamefield, 2, 7);
     }
 
-    public void makeNIPFields() {
+    private void makeNIPFields() {
         NIPlabel = new Label("NIP: ");
         NIPlabel.setPrefWidth(80);
         NIPlabel.setId("bold-label");
@@ -145,7 +145,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
         gridPane.add(NIPfield, 2, 9);
     }
 
-    public void makeAddClientButton() {
+    private void makeAddClientButton() {
         addClientButton = new Button(LogInWindow.properties.getProperty("addClient"));
         gridPane.add(addClientButton, 2, 10);
 
@@ -155,7 +155,7 @@ public class AddClientWindow implements Runnable, IStandardGUIclass {
 
     }
 
-    public void makeBackToWindowButton() {
+    private void makeBackToWindowButton() {
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 12);
 

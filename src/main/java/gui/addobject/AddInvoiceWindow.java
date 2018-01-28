@@ -70,7 +70,7 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
     public void run(){
     }
 
-    public void makeBackToWindowButton() {
+    private void makeBackToWindowButton() {
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 7);
 
@@ -79,7 +79,7 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
         });
     }
 
-    public void makeNumberRoomFields() {
+    private void makeNumberRoomFields() {
         numberRoomlabel = new Label(LogInWindow.properties.getProperty("numberRoom"));
         numberRoomlabel.setId("bold-label");
         numberRoomlabel.setPrefWidth(80);
@@ -92,7 +92,7 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
         gridPane.add(numbeRoomfield, 2, 1);
     }
 
-    public void makePeselFields() {
+    private void makePeselFields() {
 
         pesellabel = new Label("PESEL: ");
         pesellabel.setId("bold-label");
@@ -107,7 +107,7 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
 
     }
 
-    public void makeHowManyDaysFields() {
+    private void makeHowManyDaysFields() {
 
         howManyDayslabel = new Label(LogInWindow.properties.getProperty("howManyDays"));
         howManyDayslabel.setId("bold-label");
@@ -122,19 +122,19 @@ public class AddInvoiceWindow implements Runnable, IStandardGUIclass {
 
     }
 
-    public void makeAddInvoiceButton() {
+    private void makeAddInvoiceButton() {
         addInvoicetButton = new Button(LogInWindow.properties.getProperty("addInvoiceButton"));
         gridPane.add(addInvoicetButton, 2, 4);
     }
 
-    public void actionInvoiceButton(){
+    private void actionInvoiceButton(){
         addInvoicetButton.setOnAction(event -> {
             addInvoicetButton.fireEvent(new InvoiceAddedEvent(InvoiceAddedEvent.ADD_INVOICE_EVENT_EVENT_TYPE,
                     invoice, room, client));
         });
     }
 
-    public void addToDatabase(){
+    private void addToDatabase(){
 
         invoice = new Invoice();
         client = new Client();

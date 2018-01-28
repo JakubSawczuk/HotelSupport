@@ -24,7 +24,7 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
     public GridPane gridPane = new GridPane();
     private TableView<TabRow> tableView = null;
     private Label namelabel;
-    public TextField namefield;
+    private TextField namefield;
     private Button backToBasicWindowButton,
             searchClientButton;
 
@@ -52,7 +52,7 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
 
     }
 
-    public List<Client> queryGetClient() {
+    private List<Client> queryGetClient() {
         return SupportDatabase.entityManager.createQuery("SELECT e FROM Client e " +
                 "WHERE Pesel = ?1", database.entity.Client.class)
                 .setParameter(1, namefield.getText()).getResultList();
@@ -72,7 +72,7 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
 
     }
 
-    public void makeBackToWindowButton() {
+    private void makeBackToWindowButton() {
         backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
         gridPane.add(backToBasicWindowButton, 2, 6);
 
@@ -81,7 +81,7 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
         });
     }
 
-    public void actionSearchClientButton() {
+    private void actionSearchClientButton() {
 
         searchClientButton.addEventHandler(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, event -> {
             updateTab(queryGetClient().get(0));
@@ -94,7 +94,7 @@ public class SearchClientWindow implements Runnable, IStandardGUIclass {
         });
     }
 
-    public void makeSearchClientButton() {
+    private void makeSearchClientButton() {
         searchClientButton = new Button(LogInWindow.properties.getProperty("searchClientButton"));
         gridPane.add(searchClientButton, 2, 3);
     }
