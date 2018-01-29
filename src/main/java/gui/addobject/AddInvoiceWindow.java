@@ -6,6 +6,9 @@ import database.entity.Client;
 import database.entity.Invoice;
 import database.entity.Room;
 import events.InvoiceAddedEvent;
+import exceptions.NumberOfDaysException;
+import exceptions.SearchClientByPeselException;
+import exceptions.SearchRoomByNrException;
 import gui.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,6 +18,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -67,7 +71,7 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
     }
 
     @Override
-    public void run(){
+    public void run() {
     }
 
     private void makeBackToWindowButton() {
@@ -129,21 +133,41 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
         gridPane.add(addInvoicetButton, 2, 4);
     }
 
-    private void actionInvoiceButton(){
+    private void actionInvoiceButton() {
         addInvoicetButton.setOnAction(event -> {
             addInvoicetButton.fireEvent(new InvoiceAddedEvent(InvoiceAddedEvent.ADD_INVOICE_EVENT_EVENT_TYPE,
                     invoice, room, client));
         });
     }
 
-    private void addToDatabase(){
+    private List<Room> queryGetRoom() {
+        return SupportDatabase.entityManager.createQuery("SELECT r FROM Room r " +
+                "WHERE numberRoom = ?1", database.entity.Room.class)
+                .setParameter(1, Integer.parseInt(numbeRoomfield.getText())).getResultList();
+    }
+
+    private List<Client> queryGetClient() {
+        return SupportDatabase.entityManager.createQuery("SELECT r FROM Client r " +
+                "WHERE Pesel = ?1", database.entity.Client.class)
+                .setParameter(1, peselfield.getText()).getResultList();
+    }
+
+    private void addToDatabase() {
 
         invoice = new Invoice();
         client = new Client();
         room = new Room();
 
+        if (queryGetRoom().size() == 0) {
+            throw new SearchRoomByNrException(numbeRoomfield.getText(), peselfield.getText(), howManyDaysfield.getText());
+        } else if (queryGetClient().size() == 0) {
+            throw new SearchClientByPeselException(numbeRoomfield.getText(), peselfield.getText(), howManyDaysfield.getText());
+        } else if (Integer.parseInt(howManyDaysfield.getText()) < 1) {
+            throw new NumberOfDaysException(numbeRoomfield.getText(), peselfield.getText(), howManyDaysfield.getText());
+        }
+
+
         client.setPesel(peselfield.getText());
-        room.setNumberRoom(Integer.parseInt(numbeRoomfield.getText()));
         invoice.setDateInsue(java.time.LocalDateTime.now());
         invoice.setDateExpiration(LocalDateTime.now().plusDays(Long.parseLong(howManyDaysfield.getText())));
         invoice.setRoom(room);
@@ -155,8 +179,8 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
                     "Zamowienie zostalo pomyslnie dodane");
         } catch (Exception e) {
             new NewAlert("Error", "Zamowienie nie zostalo dodane",
-                    "Zamowienie nie zostalo dodane \n"+
-                    "Sprobuj ponownie");
+                    "Zamowienie nie zostalo dodane \n" +
+                            "Sprobuj ponownie");
         }
 
     }

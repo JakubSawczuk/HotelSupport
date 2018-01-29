@@ -2,7 +2,7 @@ package exceptions;
 
 import database.SupportDatabase;
 import database.entity.Client;
-import javafx.scene.control.Alert;
+import gui.NewAlert;
 
 import java.sql.SQLException;
 
@@ -13,14 +13,11 @@ public class DuplicatePrimaryKeyException extends SQLException {
 
     public DuplicatePrimaryKeyException(String pesel) {
         Client client = SupportDatabase.entityManager.find(Client.class, pesel);
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Blad dodawania klienta");
-        alert.setHeaderText("Taki PESEL wystepuje dla: " + "\n"
+        String headerText = "Taki PESEL wystepuje dla: " + "\n"
                 + "Imie: " + client.getFirstName() + "\n"
                 + "Nazwisko: " + client.getSurName() + "\n"
                 + "Nazwa firmy: " + client.getCompanyName() + "\n"
-                + "NIP: " + client.getNIP());
-
-        alert.show();
+                + "NIP: " + client.getNIP();
+        new NewAlert("Error", "Blad dodawania klienta", headerText);
     }
 }
