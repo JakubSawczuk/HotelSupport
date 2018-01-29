@@ -83,8 +83,8 @@ public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIc
         try {
             checkCorectnessClient();
             SupportDatabase.persistObject(client, peselfield.getText());
-            new NewAlert("Information", "Klient zosal dodany",
-                    "Klient zostal prawidlowo dodany");
+            new NewAlert("Information", LogInWindow.properties.getProperty("addedClient"),
+                    LogInWindow.properties.getProperty("addedClientOk"));
         } catch (DuplicatePrimaryKeyException e) {
 
         } catch (IncorrectFormatPeselException e) {

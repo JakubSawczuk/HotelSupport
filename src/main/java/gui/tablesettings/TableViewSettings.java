@@ -53,10 +53,10 @@ public class TableViewSettings {
                                 }
                             }
                             SupportDatabase.persistSimpleObject(room);
-                            new NewAlert("Information", null, "Edycja zakonczyla sie sukcesem");
+                            new NewAlert("Information", null, LogInWindow.properties.getProperty("editSucces"));
                         } catch (Exception e) {
-                            new NewAlert("Error", "Blad w zmianie pokoju",
-                                    "Nieoczekiwany blad edycji pokoju");
+                            new NewAlert("Error", LogInWindow.properties.getProperty("titleErrorAddRoom"),
+                                    LogInWindow.properties.getProperty("headerErrorAddRoom"));
                         }
 
 

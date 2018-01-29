@@ -1,5 +1,6 @@
 package exceptions;
 
+import gui.LogInWindow;
 import gui.NewAlert;
 
 /**
@@ -7,8 +8,8 @@ import gui.NewAlert;
  */
 public class IncorrectFormatPeselException extends Throwable {
     public IncorrectFormatPeselException() {
-        new NewAlert("Error", "Wpisany pesel jest niepoprawny",
-                "Sprawdz poprawnosc wpisanego peselu \n"
-                        + "Poprawny pesel powinien miec dlugosc 11 cyfr: 0-9");
+        new NewAlert("Error", LogInWindow.properties.getProperty("titleIncorrect"),
+                LogInWindow.properties.getProperty("headerIncorret1") + "\n"
+                        + LogInWindow.properties.getProperty("headerIncorret2"));
     }
 }

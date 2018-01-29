@@ -182,12 +182,11 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
 
         try {
             SupportDatabase.persistSimpleObject(invoice);
-            new NewAlert("Information", "Zamowienie zostalo dodane",
-                    "Zamowienie zostalo pomyslnie dodane");
+            new NewAlert("Information", LogInWindow.properties.getProperty("titleAddInvoice"),
+                    LogInWindow.properties.getProperty("headerAddInvoice"));
         } catch (Exception e) {
-            new NewAlert("Error", "Zamowienie nie zostalo dodane",
-                    "Zamowienie nie zostalo dodane \n" +
-                            "Sprobuj ponownie");
+            new NewAlert("Error", LogInWindow.properties.getProperty("errtitleAddInvoice"),
+                    LogInWindow.properties.getProperty("errheaderAddInvoice"));
         }
 
     }

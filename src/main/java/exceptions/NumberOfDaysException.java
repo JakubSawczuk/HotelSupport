@@ -1,5 +1,6 @@
 package exceptions;
 
+import gui.LogInWindow;
 import gui.NewAlert;
 
 /**
@@ -8,11 +9,11 @@ import gui.NewAlert;
 public class NumberOfDaysException extends IndexOutOfBoundsException {
 
     public NumberOfDaysException(String pesel, String numberRoom, String days) {
-        new NewAlert("Error", "Blad dodawania zamowienia",
-                "Nie moge dodac zamowienia o danych:\n"
-                        + "PESEL: " + pesel + "\n"
-                        + "Numer pokoju: " + numberRoom + "\n"
-                        + "Na okres: " + days + " dni" + "\n"
-                        + "Powod: Liczba dni musi byc wieksza od 0");
+                new NewAlert("Error", LogInWindow.properties.getProperty("title"),
+                        LogInWindow.properties.getProperty("header") + "\n"
+                                + "PESEL: " + pesel + "\n"
+                                + LogInWindow.properties.getProperty("numberRomExc")+ numberRoom + "\n"
+                                + LogInWindow.properties.getProperty("period") + days + "" + LogInWindow.properties.getProperty("days") + "\n"
+                                + LogInWindow.properties.getProperty("reasonDays"));
     }
 }
