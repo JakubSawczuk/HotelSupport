@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDateTime;
@@ -30,8 +31,9 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
             numbeRoomfield,
             howManyDaysfield;
 
-    private Button backToBasicWindowButton,
-            addInvoicetButton;
+    private ToggleButton backToBasicWindowButton;
+    private Button addInvoicetButton;
+
 
     private Invoice invoice;
     private Client client;
@@ -69,7 +71,8 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
     }
 
     private void makeBackToWindowButton() {
-        backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton = new ToggleButton(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton.setId("toggle-button-backToWindow");
         gridPane.add(backToBasicWindowButton, 2, 7);
 
         backToBasicWindowButton.setOnAction(event -> {

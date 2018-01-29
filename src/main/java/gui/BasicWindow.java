@@ -51,25 +51,25 @@ public class BasicWindow implements Runnable, IStandardGUIclass {
         editRoomButton.setOnAction(event -> {
             editRoomWindow.setup();
             LogInWindow.layout.setCenter(editRoomWindow.gridPane);
-            configureActionWindow(295, 420, LogInWindow.properties.getProperty("editRoomAction"));
+            configureActionWindow(295, 415, LogInWindow.properties.getProperty("editRoomAction"));
         });
 
         searchClientButton.setOnAction(event -> {
             searchClientWindow.setup();
             LogInWindow.layout.setCenter(searchClientWindow.gridPane);
-            configureActionWindow(310, 370, LogInWindow.properties.getProperty("searchClientAction"));
+            configureActionWindow(310, 385, LogInWindow.properties.getProperty("searchClientAction"));
         });
 
         addClientButton.setOnAction(event -> {
             addClientWindow.setup();
             LogInWindow.layout.setCenter(addClientWindow.gridPane);
-            configureActionWindow(300, 405, LogInWindow.properties.getProperty("addClientAction"));
+            configureActionWindow(300, 420, LogInWindow.properties.getProperty("addClientAction"));
         });
 
         addInvoiceButton.setOnAction(event -> {
             addInvoiceWindow.setup();
             LogInWindow.layout.setCenter(addInvoiceWindow.gridPane);
-            configureActionWindow(295, 280, LogInWindow.properties.getProperty("addInvoiceAction"));
+            configureActionWindow(295, 295, LogInWindow.properties.getProperty("addInvoiceAction"));
         });
 
 

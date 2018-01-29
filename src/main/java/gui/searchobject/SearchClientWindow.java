@@ -9,10 +9,7 @@ import gui.LogInWindow;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import search.client.SearchClientBO;
 
@@ -25,8 +22,8 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
     private TableView<TabRow> tableView = null;
     private Label namelabel;
     private TextField namefield;
-    private Button backToBasicWindowButton,
-            searchClientButton;
+    private Button searchClientButton;
+    private ToggleButton backToBasicWindowButton;
 
     private SearchClientBO searchClientBO;
 
@@ -53,6 +50,7 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
         actionSearchClientButton();
 
     }
+
     private void makeNameFields() {
         namelabel = new Label(LogInWindow.properties.getProperty("client"));
         namelabel.setId("bold-label");
@@ -68,7 +66,8 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
     }
 
     private void makeBackToWindowButton() {
-        backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton = new ToggleButton(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton.setId("toggle-button-backToWindow");
         gridPane.add(backToBasicWindowButton, 2, 6);
 
         backToBasicWindowButton.setOnAction(event -> {

@@ -12,6 +12,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -34,8 +35,9 @@ public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIc
             companyNamefield,
             NIPfield;
 
-    private Button backToBasicWindowButton,
-            addClientButton;
+    private Button addClientButton;
+
+    private ToggleButton backToBasicWindowButton;
 
     private Client client;
 
@@ -154,7 +156,8 @@ public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIc
     }
 
     private void makeBackToWindowButton() {
-        backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton = new ToggleButton(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton.setId("toggle-button-backToWindow");
         gridPane.add(backToBasicWindowButton, 2, 12);
 
         backToBasicWindowButton.setOnAction(event -> {

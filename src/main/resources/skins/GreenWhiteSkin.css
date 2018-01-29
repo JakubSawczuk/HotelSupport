@@ -1,11 +1,13 @@
-.root{
+.root {
     -fx-background-color: gainsboro;
 }
-.label{
-    -fx-text-fill: black;
+
+.label {
+    -fx-text-fill: #FFFFFF;
     -fx-text-color: black;
 }
-.button{
+
+.button {
     -fx-background-color: green;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 5;
@@ -13,31 +15,80 @@
     -fx-font-weight: bold;
 }
 
-#bold-label{
+#bold-label {
     -fx-font-weight: bold;
-    -fx-text-color: black;
+    -fx-text-fill: black;
 }
 
-.menu-bar{
+#date-label {
+    -fx-text-fill: black;
+}
+
+.menu-bar {
     -fx-background-color: green;
     -fx-font-weight: bold;
 }
 
-.menu-item{
+.menu-item {
     -fx-background-color: green;
     -fx-font-weight: bold;
 }
 
-.table-view{
+.table-view {
     -fx-background-color: green;
+    -fx-background-radius: 5;
+    -fx-background-insets: -3;
 }
 
 .table-row-cell:selected {
     -fx-background-color: green;
-    -fx-background-insets: 0;
-    -fx-background-radius: 1;
 }
 
 .table-view .table-column {
     -fx-alignment: CENTER;
+}
+
+#toggle-button-login {
+    -fx-background-color: green;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 5;
+    -fx-pref-width: 150px;
+    -fx-font-weight: bold;
+}
+
+#toggle-button-login:hover {
+    -fx-graphic: url('http://icons.iconarchive.com/icons/aha-soft/security/32/secrecy-icon.png');
+    -fx-graphic-text-gap: 10px;
+    -fx-background-color: green;
+    -fx-background-position: center;
+}
+
+#toggle-button-exit {
+    -fx-background-color: green;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 5;
+    -fx-pref-width: 150px;
+    -fx-font-weight: bold;
+}
+
+#toggle-button-exit:hover {
+    -fx-graphic: url('http://icons.iconarchive.com/icons/double-j-design/origami-colored-pencil/32/red-cross-icon.png');
+    -fx-graphic-text-gap: 10px;
+    -fx-background-color: green;
+    -fx-background-position: center;
+}
+
+#toggle-button-backToWindow {
+    -fx-background-color: green;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 5;
+    -fx-pref-width: 150px;
+    -fx-font-weight: bold;
+}
+
+#toggle-button-backToWindow:hover {
+    -fx-graphic: url('http://icons.iconarchive.com/icons/iconsmind/outline/32/Back-2-icon.png');
+    -fx-graphic-text-gap: 5px;
+    -fx-background-color: green;
+    -fx-background-position: center;
 }

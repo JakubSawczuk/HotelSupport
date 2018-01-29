@@ -10,10 +10,7 @@ import gui.LogInWindow;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
@@ -27,8 +24,9 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
     private TableView<TabRow> tableView = null;
     private Label numberRoomlabel;
     private TextField numberRoomfield;
-    private Button backToBasicWindowButton,
-            searchRoomButton;
+    private ToggleButton backToBasicWindowButton;
+    private Button searchRoomButton;
+
 
     @Override
     public void run() {
@@ -88,7 +86,8 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
     }
 
     private void makeBackToWindowButton() {
-        backToBasicWindowButton = new Button(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton = new ToggleButton(LogInWindow.properties.getProperty("backToMenu"));
+        backToBasicWindowButton.setId("toggle-button-backToWindow");
         gridPane.add(backToBasicWindowButton, 2, 7);
 
         backToBasicWindowButton.setOnAction(event -> {

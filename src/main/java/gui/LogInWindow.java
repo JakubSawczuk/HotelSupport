@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import static java.lang.System.exit;
-import static java.lang.Thread.sleep;
 
 /**
  * Created by Kuba on 2018-01-17.
@@ -38,14 +37,14 @@ public class LogInWindow extends Application implements IStandardGUIclass {
 
     private Label namelabel,
             passlabel,
-            stringdatalabel,
-            datalabel;
+            stringdatelabel,
+            datelabel;
 
     private TextField namefield,
             passfield;
 
-    private Button loginButton,
-            exitButton;
+    private ToggleButton exitButton,
+            loginButton;
 
 
     private SupportDatabase supportDatabase = new SupportDatabase();
@@ -59,8 +58,9 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        (new Thread(dataByRESTful)).start();
-        sleep(2700);
+        //ToDo: Odkomentowac przy testowaniu resta
+        //(new Thread(dataByRESTful)).start();
+        // sleep(2700);
         window = primaryStage;
         readLanguageProperties("src\\main\\resources\\pol.properties");
         setup();
@@ -147,12 +147,12 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         grid.setHgap(3);
         grid.setPadding(new Insets(0, 10, 10, 10));
         grid.getChildren().addAll(namelabel, namefield, passlabel, passfield,
-                loginButton, exitButton, stringdatalabel, datalabel);
+                loginButton, exitButton, stringdatelabel, datelabel);
 
 
         layout.setCenter(grid);
 
-        scene = new Scene(layout, 260, 220);
+        scene = new Scene(layout, 260, 235);
         scene.getStylesheets().add("skins/RedSilverSkin.css");
         window.setTitle(properties.getProperty("titleLogInWindow"));
         window.setScene(scene);
@@ -161,14 +161,16 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     }
 
     private void makeLoginButton() {
-        loginButton = new Button(properties.getProperty("loginButtonText"));
+        loginButton = new ToggleButton(properties.getProperty("loginButtonText"));
+        loginButton.setId("toggle-button-login");
         grid.setConstraints(loginButton, 1, 3);
 
 
     }
 
     private void makeExitButton() {
-        exitButton = new Button(properties.getProperty("exitButtonText"));
+        exitButton = new ToggleButton(properties.getProperty("exitButtonText"));
+        exitButton.setId("toggle-button-exit");
         grid.setConstraints(exitButton, 1, 5);
     }
 
@@ -193,12 +195,13 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     }
 
     private void makeDateFields() {
-        stringdatalabel = new Label(properties.getProperty("date"));
-        grid.setConstraints(stringdatalabel, 0, 7);
+        stringdatelabel = new Label(properties.getProperty("date"));
+        stringdatelabel.setId("date-label");
+        grid.setConstraints(stringdatelabel, 0, 7);
 
-        datalabel = new Label(" " + dataByRESTful.timeClock);
-        datalabel.setId("bold-label");
-        grid.setConstraints(datalabel, 1, 7);
+        datelabel = new Label(" " + dataByRESTful.timeClock);
+        datelabel.setId("bold-label");
+        grid.setConstraints(datelabel, 1, 7);
     }
 
     private void makeSkinMenu() {
