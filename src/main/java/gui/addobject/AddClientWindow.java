@@ -7,6 +7,7 @@ import database.SupportDatabase;
 import database.entity.Client;
 import events.ClientAddedEvent;
 import exceptions.DuplicatePrimaryKeyException;
+import exceptions.IncorrectFormatPeselException;
 import gui.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -14,6 +15,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Kuba on 2018-01-27.
@@ -57,7 +61,17 @@ public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIc
 
     }
 
-    private void addToDatabase(){
+    public void checkCorectnessClient() throws IncorrectFormatPeselException {
+        Pattern patternPesel = Pattern.compile("[0-9]{11}");
+        Matcher matcherPesel = patternPesel.matcher(peselfield.getText());
+
+
+        if (!matcherPesel.matches()) {
+            throw new IncorrectFormatPeselException();
+        }
+    }
+
+    private void addToDatabase() {
         Director director = new Director();
         BuilderClient builderClient = new ClientAdded();
         director.setBuilderClient(builderClient);
@@ -65,11 +79,16 @@ public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIc
                 firstnamefield.getText(), surnamefield.getText(), NIPfield.getText());
         Client client = director.getClient();
 
+
         try {
+            checkCorectnessClient();
             SupportDatabase.persistObject(client, peselfield.getText());
             new NewAlert("Information", "Klient zosal dodany",
                     "Klient zostal prawidlowo dodany");
-        } catch (DuplicatePrimaryKeyException e) {}
+        } catch (DuplicatePrimaryKeyException e) {
+
+        } catch (IncorrectFormatPeselException e) {
+        }
 
     }
 
@@ -165,8 +184,6 @@ public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIc
             addClientWindow.backToBasicWindow(gridPane);
         });
     }
-
-
 
 
     @Override

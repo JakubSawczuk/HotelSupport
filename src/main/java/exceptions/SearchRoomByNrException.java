@@ -14,5 +14,6 @@ public class SearchRoomByNrException extends IndexOutOfBoundsException {
                 + "Numer pokoju: " + numberRoom + "\n"
                 + "Na okres: " + days + " dni" + "\n"
                 + "Powod: Nie istnieje taki pokoj w hotelu");
+
     }
 }

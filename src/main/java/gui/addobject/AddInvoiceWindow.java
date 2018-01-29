@@ -158,12 +158,19 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
         client = new Client();
         room = new Room();
 
-        if (queryGetRoom().size() == 0) {
-            throw new SearchRoomByNrException(numbeRoomfield.getText(), peselfield.getText(), howManyDaysfield.getText());
-        } else if (queryGetClient().size() == 0) {
-            throw new SearchClientByPeselException(numbeRoomfield.getText(), peselfield.getText(), howManyDaysfield.getText());
-        } else if (Integer.parseInt(howManyDaysfield.getText()) < 1) {
-            throw new NumberOfDaysException(numbeRoomfield.getText(), peselfield.getText(), howManyDaysfield.getText());
+
+        if (numbeRoomfield.getLength() != 0) {
+            if (queryGetRoom().size() == 0) {
+                throw new SearchRoomByNrException(peselfield.getText(), numbeRoomfield.getText(), howManyDaysfield.getText());
+            }
+        } else {
+            throw new SearchRoomByNrException(peselfield.getText(), numbeRoomfield.getText(), howManyDaysfield.getText());
+        }
+        if (queryGetClient().size() == 0) {
+            throw new SearchClientByPeselException(peselfield.getText(), numbeRoomfield.getText(), howManyDaysfield.getText());
+        }
+        if (Integer.parseInt(howManyDaysfield.getText()) < 1) {
+            throw new NumberOfDaysException(peselfield.getText(), numbeRoomfield.getText(), howManyDaysfield.getText());
         }
 
 
