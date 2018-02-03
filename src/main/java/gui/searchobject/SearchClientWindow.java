@@ -2,10 +2,7 @@ package gui.searchobject;
 
 import database.entity.Client;
 import events.SearchClientEvent;
-import gui.ABackToBasicWindow;
-import gui.IStandardGUIclass;
-import gui.InstancesSet;
-import gui.LogInWindow;
+import gui.*;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
 import javafx.geometry.Insets;
@@ -85,8 +82,14 @@ public class SearchClientWindow extends ABackToBasicWindow implements Runnable, 
         searchClientButton.setOnAction(event -> {
             searchClientBO = new SearchClientBO(namefield.getText());
             tableView = TableViewSettings.newTable(gridPane, 240, 155);
-            searchClientButton.fireEvent
-                    (new SearchClientEvent(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, searchClientBO.getClientList().get(0)));
+            try {
+                searchClientButton.fireEvent
+                        (new SearchClientEvent(SearchClientEvent.SEARCH_CLIEND_WINDOW_EVENT_EVENT_TYPE, searchClientBO.getClientList().get(0)));
+            }catch (Exception e){
+                new NewAlert(
+                        "Error", LogInWindow.properties.getProperty("header"), LogInWindow.properties.getProperty("reasonClient")
+                );
+            }
         });
     }
 

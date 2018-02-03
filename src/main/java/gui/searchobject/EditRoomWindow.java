@@ -3,10 +3,7 @@ package gui.searchobject;
 import database.SupportDatabase;
 import database.entity.Room;
 import events.EditRoomEvent;
-import gui.ABackToBasicWindow;
-import gui.IStandardGUIclass;
-import gui.InstancesSet;
-import gui.LogInWindow;
+import gui.*;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
 import javafx.beans.property.DoubleProperty;
@@ -84,8 +81,14 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
         });
 
         searchRoomButton.setOnAction(event -> {
-            searchRoomButton.fireEvent
-                    (new EditRoomEvent(EditRoomEvent.EDIT_ROOM_EVENT_EVENT_TYPE, queryGetRoom().get(0)));
+            try {
+                searchRoomButton.fireEvent
+                        (new EditRoomEvent(EditRoomEvent.EDIT_ROOM_EVENT_EVENT_TYPE, queryGetRoom().get(0)));
+            }catch (Exception e){
+                new NewAlert(
+                        "Error", LogInWindow.properties.getProperty("header"), LogInWindow.properties.getProperty("reasonRoom")
+                );
+            }
         });
 
     }

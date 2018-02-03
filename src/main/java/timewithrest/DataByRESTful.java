@@ -19,7 +19,7 @@ public class DataByRESTful implements Runnable {
 
     public void run() {
             try {
-                dataByRESTful = restTemplate.getForObject("https://www.amdoren.com/api/timezone.php?api_key=7PELQVEb5hXeq3h4RhiKHFVNjSVyTd&loc=Warsaw", DataByRESTful.class);
+                dataByRESTful = restTemplate.getForObject("https://www.amdoren.com/api/timezone.php?api_key=c5BPRzpxE7UE9aij2pFDutQjvHaWDp&loc=Warsaw", DataByRESTful.class);
                 System.out.println(dataByRESTful.getTime());
                 reformatData();
             } catch (Exception e) {

@@ -32,6 +32,7 @@ public class SupportDatabase implements Runnable {
 
     public static void persistObject(Object obj, String pesel) throws DuplicatePrimaryKeyException {
         try {
+
             entityManager.getTransaction().begin();
             entityManager.persist(obj);
             entityManager.getTransaction().commit();
@@ -42,6 +43,7 @@ public class SupportDatabase implements Runnable {
 
     public static void persistSimpleObject(Object obj) {
         try {
+
             entityManager.getTransaction().begin();
             entityManager.persist(obj);
             entityManager.getTransaction().commit();

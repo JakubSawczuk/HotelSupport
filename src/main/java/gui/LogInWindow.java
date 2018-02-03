@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
 
 /**
  * Created by Kuba on 2018-01-17.
@@ -57,9 +58,8 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        //ToDo: Odkomentowac przy testowaniu resta
-        //(new Thread(dataByRESTful)).start();
-        // sleep(2700);
+        (new Thread(dataByRESTful)).start();
+        sleep(2700);
         window = primaryStage;
         readLanguageProperties("src\\main\\resources\\pol.properties");
         setup();

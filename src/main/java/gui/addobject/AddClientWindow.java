@@ -88,6 +88,7 @@ public class AddClientWindow extends ABackToBasicWindow implements IStandardGUIc
         } catch (DuplicatePrimaryKeyException e) {
 
         } catch (IncorrectFormatPeselException e) {
+
         }
 
     }

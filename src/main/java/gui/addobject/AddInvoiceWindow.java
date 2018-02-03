@@ -173,12 +173,18 @@ public class AddInvoiceWindow extends ABackToBasicWindow implements Runnable, IS
             throw new NumberOfDaysException(peselfield.getText(), numbeRoomfield.getText(), howManyDaysfield.getText());
         }
 
-
+        room.setNumberRoom(Integer.parseInt(numbeRoomfield.getText()));
         client.setPesel(peselfield.getText());
         invoice.setDateInsue(java.time.LocalDateTime.now());
         invoice.setDateExpiration(LocalDateTime.now().plusDays(Long.parseLong(howManyDaysfield.getText())));
+        invoice.setHowManyDays(Integer.parseInt(howManyDaysfield.getText()));
         invoice.setRoom(room);
         invoice.setClient(client);
+
+        System.out.println(peselfield.getText());
+        System.out.println(numbeRoomfield.getText());
+        System.out.println(howManyDaysfield.getText());
+
 
         try {
             SupportDatabase.persistSimpleObject(invoice);

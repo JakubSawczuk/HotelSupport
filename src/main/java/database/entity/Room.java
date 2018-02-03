@@ -3,8 +3,6 @@ package database.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  * Created by Kuba on 2017-12-19.
@@ -23,10 +21,6 @@ public class Room {
     private int capacity;
     private float price;
 
-    @ManyToOne
-    @JoinColumn(name = "invoices")
-    private
-    Invoice invoice;
 
     public String getImg() {
         return img;
@@ -82,14 +76,6 @@ public class Room {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
     }
 
 }
