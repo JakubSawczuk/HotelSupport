@@ -86,3 +86,9 @@
     -fx-background-color: #AB4642;
     -fx-background-position: center;
 }
+
+#picture{
+    -fx-background-color: #AB4642;
+    -fx-background-radius: 5;
+    -fx-background-insets: -3;
+}

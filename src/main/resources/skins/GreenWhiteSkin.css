@@ -92,3 +92,10 @@
     -fx-background-color: green;
     -fx-background-position: center;
 }
+
+#picture{
+    -fx-background-color: green;
+    -fx-background-radius: 5;
+    -fx-background-insets: -3;
+}
+

@@ -12,7 +12,6 @@ import timewithrest.DataByRESTful;
 public class InstancesSet {
 
     private static volatile BasicWindow instanceBasicWindow = null;
-    private static volatile LogInWindow instanceLogInWindow = null;
     private static volatile SearchClientWindow instanceShowClientWindow = null;
     private static volatile AddClientWindow instanceAddClientWindow = null;
     private static volatile AddInvoiceWindow instanceAddInvoiceWindow = null;
@@ -20,17 +19,6 @@ public class InstancesSet {
     private static volatile DataByRESTful instanceDataByRESTful = null;
 
     private InstancesSet() {
-    }
-
-    public static LogInWindow getInstanceLogInWindow() {
-        if (instanceLogInWindow == null) {
-            synchronized (LogInWindow.class) {
-                if (instanceLogInWindow == null) {
-                    instanceLogInWindow = new LogInWindow();
-                }
-            }
-        }
-        return instanceLogInWindow;
     }
 
     public static BasicWindow getInstanceBasicWindow() {

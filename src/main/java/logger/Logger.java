@@ -5,6 +5,9 @@ package logger;
  */
 public class Logger {
 
+    private Logger() {
+    }
+
     public static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(Logger.class);
     public static void debug (String message) {
         LOGGER.debug(message);

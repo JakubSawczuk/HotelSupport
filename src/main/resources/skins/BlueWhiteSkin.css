@@ -40,7 +40,7 @@
 }
 
 .table-row-cell:selected {
-    -fx-background-color: blue;
+    -fx-background-color: deepskyblue;
 }
 
 .table-view .table-column {
@@ -91,3 +91,10 @@
     -fx-background-color: deepskyblue;
     -fx-background-position: center;
 }
+
+#picture{
+    -fx-background-color: deepskyblue;
+    -fx-background-radius: 5;
+    -fx-background-insets: -3;
+}
+

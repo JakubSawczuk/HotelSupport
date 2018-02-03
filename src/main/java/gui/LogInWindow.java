@@ -3,14 +3,12 @@ package gui;
 import database.SupportDatabase;
 import events.LogInEvent;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import timewithrest.DataByRESTful;
 
 import java.io.FileReader;
@@ -23,6 +21,7 @@ import static java.lang.System.exit;
  * Created by Kuba on 2018-01-17.
  */
 public class LogInWindow extends Application implements IStandardGUIclass {
+
 
     public static Properties properties;
     static public Stage window;
@@ -65,16 +64,13 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         readLanguageProperties("src\\main\\resources\\pol.properties");
         setup();
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                try {
-                    SupportDatabase.entityManager.close();
-                    SupportDatabase.entityManagerFactory.close();
-                } catch (NullPointerException e) {
-                } finally {
-                    primaryStage.close();
-                }
+        primaryStage.setOnCloseRequest(event -> {
+            try {
+                SupportDatabase.entityManager.close();
+                SupportDatabase.entityManagerFactory.close();
+            } catch (NullPointerException e) {
+            } finally {
+                primaryStage.close();
             }
         });
 
@@ -207,27 +203,31 @@ public class LogInWindow extends Application implements IStandardGUIclass {
     private void makeSkinMenu() {
         skinMenu = new Menu(properties.getProperty("skin"));
 
-        MenuItem redSkin = new MenuItem(properties.getProperty("skinred"));
-        redSkin.setOnAction(event -> {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add("skins/RedSilverSkin.css");
-            window.setScene(scene);
-        });
+        try {
+            MenuItem redSkin = new MenuItem(properties.getProperty("skinred"));
+            redSkin.setOnAction(event -> {
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("skins/RedSilverSkin.css");
+                window.setScene(scene);
+            });
 
-        MenuItem blueSkin = new MenuItem(properties.getProperty("skinblue"));
-        blueSkin.setOnAction(event -> {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add("skins/BlueWhiteSkin.css");
-            window.setScene(scene);
-        });
+            MenuItem blueSkin = new MenuItem(properties.getProperty("skinblue"));
+            blueSkin.setOnAction(event -> {
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("skins/BlueWhiteSkin.css");
+                window.setScene(scene);
+            });
 
-        MenuItem greenSkin = new MenuItem(properties.getProperty("skingreen"));
-        greenSkin.setOnAction(event -> {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add("skins/GreenWhiteSkin.css");
-            window.setScene(scene);
-        });
-        skinMenu.getItems().addAll(redSkin, blueSkin, greenSkin);
+            MenuItem greenSkin = new MenuItem(properties.getProperty("skingreen"));
+            greenSkin.setOnAction(event -> {
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add("skins/GreenWhiteSkin.css");
+                window.setScene(scene);
+            });
+            skinMenu.getItems().addAll(redSkin, blueSkin, greenSkin);
+        }catch (Exception e){
+            new NewAlert("Error", properties.getProperty("errorSkinTitle"), properties.getProperty("errorSkinHeader"));
+        }
     }
 
     private void makeLanguageMenu() {
@@ -235,20 +235,27 @@ public class LogInWindow extends Application implements IStandardGUIclass {
         ToggleGroup difficultyToggle = new ToggleGroup();
         RadioMenuItem languagePol = new RadioMenuItem(properties.getProperty("pol"));
         languagePol.setOnAction(event -> {
-            readLanguageProperties("src\\main\\resources\\pol.properties");
-            layout.getChildren().remove(grid);
-            layout.getChildren().remove(menuBar);
-            setup();
-            languagePol.setSelected(true);
+            try {
+                readLanguageProperties("src\\main\\resources\\pol.properties");
+                layout.getChildren().remove(grid);
+                layout.getChildren().remove(menuBar);
+                setup();
+                languagePol.setSelected(true);
+            }catch (Exception e){
+                new NewAlert("Error", "Error has occurred", "The skin did not load");
+            }
         });
         RadioMenuItem languageAng = new RadioMenuItem(properties.getProperty("eng"));
         languageAng.setOnAction(event -> {
-            readLanguageProperties("src\\main\\resources\\ang.properties");
-            layout.getChildren().remove(grid);
-            layout.getChildren().remove(menuBar);
-            setup();
-            languageAng.setSelected(true);
-
+            try {
+                readLanguageProperties("src\\main\\resources\\ang.properties");
+                layout.getChildren().remove(grid);
+                layout.getChildren().remove(menuBar);
+                setup();
+                languageAng.setSelected(true);
+            }catch (Exception e){
+                new NewAlert("Error", "Wystapil blad", "Skorka nie zostala zmieniona");
+            }
 
         });
 

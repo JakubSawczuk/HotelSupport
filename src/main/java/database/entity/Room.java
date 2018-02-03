@@ -1,6 +1,5 @@
 package database.entity;
 
-import modificationroom.RoomI;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +10,7 @@ import javax.persistence.ManyToOne;
  * Created by Kuba on 2017-12-19.
  */
 @Entity
-public class Room implements RoomI{
+public class Room {
 
     @Id
     private
@@ -20,6 +19,7 @@ public class Room implements RoomI{
     private boolean isAvailable;
     private boolean isClear;
     private String comfort;
+    private String img;
     private int capacity;
     private float price;
 
@@ -27,6 +27,14 @@ public class Room implements RoomI{
     @JoinColumn(name = "invoices")
     private
     Invoice invoice;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public int getNumberRoom() {
         return numberRoom;
@@ -84,8 +92,4 @@ public class Room implements RoomI{
         this.invoice = invoice;
     }
 
-    @Override
-    public void display() {
-
-    }
 }

@@ -9,8 +9,11 @@ import gui.InstancesSet;
 import gui.LogInWindow;
 import gui.tablesettings.TabRow;
 import gui.tablesettings.TableViewSettings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
@@ -26,6 +29,8 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
     private TextField numberRoomfield;
     private ToggleButton backToBasicWindowButton;
     private Button searchRoomButton;
+    private ImageView imageView;
+    DoubleProperty zoomProperty = new SimpleDoubleProperty(200);
 
 
     @Override
@@ -45,7 +50,7 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
 
     public void setup() {
         gridPane.setVgap(10);
-        gridPane.setHgap(3);
+        gridPane.setHgap(4);
         gridPane.setPadding(new Insets(10, 20, 5, 20));
 
         makeAllButtons();
@@ -65,12 +70,24 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
             tableView = TableViewSettings.newTable(gridPane, 241, 170);
             tableView.setEditable(true);
             updateTab(queryGetRoom().get(0));
+
+            LogInWindow.window.setWidth(LogInWindow.window.getWidth()+250);
+            LogInWindow.window.setHeight(LogInWindow.window.getHeight()+20);
+
+
+            imageView = new ImageView(queryGetRoom().get(0).getImg());
+            imageView.setFitHeight(200);
+            imageView.setFitWidth(250);
+            imageView.setId("picture");
+
+            gridPane.add(imageView, 4, 2);
         });
 
         searchRoomButton.setOnAction(event -> {
             searchRoomButton.fireEvent
                     (new EditRoomEvent(EditRoomEvent.EDIT_ROOM_EVENT_EVENT_TYPE, queryGetRoom().get(0)));
         });
+
     }
 
     private void makeNumberRoomFields() {
@@ -91,6 +108,7 @@ public class EditRoomWindow extends ABackToBasicWindow implements Runnable, ISta
         gridPane.add(backToBasicWindowButton, 2, 7);
 
         backToBasicWindowButton.setOnAction(event -> {
+            gridPane.getChildren().remove(imageView);
             EditRoomWindow editRoomWindow = InstancesSet.getInstanceEditRoomWindow();
             editRoomWindow.backToBasicWindow(gridPane);
         });
